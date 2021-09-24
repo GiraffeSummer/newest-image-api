@@ -1,0 +1,144 @@
+option {
+    color: black;
+    font-weight: bold;
+}
+
+option:checked {
+    --bg: rgb(118, 148, 247);
+    background: linear-gradient(var(--bg), var(--bg));
+}
+
+p {
+    margin: 1px;
+}
+
+body {
+    background-color: #DF847F;
+}
+
+ul img {
+    border-radius: 6px;
+    padding: 4px;
+    float: left;
+    width: 60px;
+    height: 50px;
+    margin-right: 3px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    margin-bottom: 10px;
+    ;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 20px 16px;
+    text-decoration: none;
+    min-width: 40px;
+    ;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+a.active {
+    background-color: #DF847F;
+}
+
+pre {
+    margin-left: 20px;
+    white-space: pre-wrap;
+    background: hsl(30, 80%, 90%);
+    padding: 20px;
+    padding-right: 60px;
+    display: inline-block;
+    border-radius: 3px;
+}
+
+#endpoint {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#demoImage {
+    width: 70px;
+    height: 60px;
+}
+
+
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    background-color: #333;
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+a.skip {
+    cursor: pointer;
+}
+
+div.uploads {
+    margin: 2px;
+    margin-bottom: 10px;
+    padding: 10px;
+    max-width: 300px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 4px;
+}
+
+a.reflink {
+    margin: 2px;
+    margin-left: 0;
+    color: #0135E1;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+html * {
+    font-family: Arial !important;
+}
+
+.json-key {
+    color: brown;
+}
+
+.json-value {
+    color: navy;
+}
+
+.json-string {
+    color: olive;
+}

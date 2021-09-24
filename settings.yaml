@@ -1,0 +1,8 @@
+appName: Image db
+permissions:
+  none: 0
+  member: 1
+  upload: 2
+  download: 3
+  access_user: 8
+  all_perms_allowed: 12

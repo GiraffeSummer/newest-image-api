@@ -1,0 +1,186 @@
+body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif, Arial;
+  
+    background-color: #df847f;
+    color: white;
+  }
+  
+  button,
+  input,
+  select,
+  textarea {
+    font-family: "Open Sans", sans-serif, Arial;
+    font-size: 100%;
+    vertical-align: baseline;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.25);
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    display: block;
+    width: calc(100% - 24px);
+    margin: 0 0px 20px 0px;
+    padding: 8px 12px 10px 12px;
+  }
+  
+  input[type="button"] {
+    background-color: #7289da;
+    border-radius: 5px;
+    padding: 8px 20px;
+    float: right;
+  }
+  
+  button {
+    background-color: #7289da;
+    border-radius: 5px;
+    padding: 8px 20px;
+  }
+  
+  input[type="button"]:hover {
+    background-color: #667ed5;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #667ed5;
+    cursor: pointer;
+  }
+  
+  #root {
+    position: fixed;
+    width: 90%;
+    max-width: 1000px;
+    height: 90%;
+    max-height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  #navbar {
+    position: absolute;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 73%;
+    overflow: hidden;
+    background-color: #262626;
+    border-radius: 20px 0px 0px 20px;
+  }
+  
+  #content {
+    position: absolute;
+    left: 27%;
+    right: 0px;
+    padding: 40px 30px;
+    top: 0px;
+    bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  li {
+    margin: 0;
+  }
+  
+  li h1 {
+    display: block;
+    margin: 0;
+    padding: 40px 30px;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    padding: 20px 30px;
+    text-decoration: none;
+    min-width: 40px;
+  }
+  
+  option {
+    font-weight: bold;
+  }
+  
+  option:checked {
+    --bg: rgb(118, 148, 247);
+    background: linear-gradient(var(--bg), var(--bg));
+  }
+  
+  p {
+    margin: 1px;
+  }
+  
+  ul img {
+    border-radius: 6px;
+    padding: 4px;
+    float: left;
+    width: 60px;
+    height: 50px;
+    margin-right: 3px;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #111;
+  }
+  
+  a.active {
+    background-color: #333;
+  }
+  
+  pre {
+    margin-left: 20px;
+    white-space: pre-wrap;
+    background: rgb(77, 77, 79);
+    padding: 20px;
+    padding-right: 60px;
+    display: inline-block;
+    border-radius: 3px;
+  }
+  
+  #endpoint {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  #demoImage {
+    width: 70px;
+    height: 60px;
+  }
+  
+  a.skip {
+    cursor: pointer;
+  }
+  
+  div.uploads {
+    margin: 2px;
+    margin-bottom: 10px;
+    padding: 10px;
+    max-width: 300px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 4px;
+  }
+  
+  a.reflink {
+    margin: 2px;
+    margin-left: 0;
+    color: #0135e1;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  

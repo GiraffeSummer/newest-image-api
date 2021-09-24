@@ -1,0 +1,7 @@
+GENRE {name, nsfw,user}
+gif {name, path, filename, size,date,user }
+user {userid, email,banner_color: color,username,joindate,permissions}
+
+permissions {action}
+
+keys {key, holder, uses, perms}
