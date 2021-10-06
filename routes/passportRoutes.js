@@ -5,7 +5,7 @@ const { ensureAuthenticated, passport, GetSafeUser } = require("../index.js");
 module.exports = Router;
 const redirectUrl = "/";
 
-Router.get('/auth/logout', async function (req, res) {
+Router.get('/auth/logout', async (req, res) => {
     try {
         req.session.destroy();
         req.logout();
@@ -18,7 +18,7 @@ Router.get('/auth/logout', async function (req, res) {
 Router.get('/auth/discord', passport.authenticate('discord'));
 
 Router.get('/auth/discord/callback', passport.authenticate('discord', { failureRedirect: '/login' }),
-    function (req, res) {
+    (req, res) => {
         //console.log(req)
         res.redirect(redirectUrl)
     }
