@@ -23,7 +23,7 @@ Router.get('/find/:search', async (req, res) => {
     }
     const results = await db.schemas.Gifs.find(query).populate('user');
 
-    console.log(results);
+    //console.log(results);
 
     res.send({ user: GetSafeUser(req.user), gifs: results.map(x => { x.user = GetSafeUser(x.user); return x; }) });
 });
