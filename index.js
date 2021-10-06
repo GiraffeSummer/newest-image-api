@@ -52,11 +52,11 @@ function ensurePerms(perms) {
     }
 }
 
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
     done(null, user);
 });
 
-passport.deserializeUser(function (obj, done) {
+passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
 
@@ -106,7 +106,7 @@ const SessionOpts = session({
     resave: true,
     store: MongoStore.create({ mongoUrl: 'mongodb://' + process.env.MONGODB_URI, collection: 'sessions', ttl: 24 * 60 * 60 }),
     saveUninitialized: true,
-    cookie: { secure: /*!DEVELOPMENT*/ true, maxAge: 8 * 60 * 60 * 1000 }
+    cookie: { secure: !DEVELOPMENT, maxAge: 8 * 60 * 60 * 1000 }
 })
 app.use(SessionOpts);
 app.use(passport.initialize());
