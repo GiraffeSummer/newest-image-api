@@ -20,12 +20,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "client-install":"cd client && npm install",
+    "client-install": "cd client && npm install",
     "client-build": "cd client && npm run build",
     "server-run": "nodemon index.js",
     "client-run": "cd client && npm run dev",
     "dev": "concurrently \"npm run server-run\" \"npm run client-run\"",
-    "buildrun": "npm run client-build && npm run server-run"
+    "build-server": "npm run client-build && npm run server-run"
   },
   "keywords": [],
   "author": "",

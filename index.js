@@ -11,21 +11,23 @@ const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 3000;
 
-const APPNAME = process.env.APPNAME;
-const BaseDomain = "https://" + APPNAME + ".loca.lt";
-const allowedOrigins = [BaseDomain, "https://google.com", "https://cdn.discordapp.com/", "http://localhost:5000"];
-
-const db = require("./lib/db")();
 const settings = require("./lib/settings");
 
-const useEJS = true;
+const APPNAME = settings.get('appName');
+const BaseDomain = "https://" + APPNAME + ".loca.lt";
+const allowedOrigins = [BaseDomain, "https://google.com", "https://cdn.discordapp.com/",
+    `http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`,
+    "http://localhost:5000", "http://127.0.0.1:5000", settings.get('frontEndUrl')];
+
+const db = require("./lib/db")();
 
 function ensureAuthenticated(req, res, next) {
     const Authorized = req.isAuthenticated();
     if (Authorized) {
         return next();
-    } else
+    } else {
         res.redirect("/login")
+    }
 }
 
 function ensurePerms(perms) {
@@ -60,42 +62,63 @@ passport.deserializeUser((obj, done) => {
     done(null, obj);
 });
 
-function GetSafeUser(user) {
+function GetSafeUser(user, self = false) {
     if (user === undefined) return null;
     const safeUser = {
         username: user.username,
         color: user.color,
         avatar: user.avatar,
         joindate: user.joindate,
-        userid: user.userid,
-        permissions: user.permissions
+        userid: user.userid
     }
+
+    //if it is itself
+    if (self == true) {
+        safeUser['permissions'] = user.permissions;
+    }
+
+    return safeUser;
+}
+
+//for custom applications idk might come in handy
+function GetDataUser(user, items = ['username', 'userid']) {
+    if (user === undefined) return null;
+    if (!Array.isArray(items)) throw new Error("Not an array, items needs to be an array");
+
+    let safeUser = {};
+    items.forEach(element => {
+        safeUser[element] = user[element];
+    });
+
     return safeUser;
 }
 
 module.exports = {
+    APPNAME,
     ensureAuthenticated,
     ensurePerms,
     passport,
     db,
     PORT,
     settings,
-    GetSafeUser,
-    app, useEJS
+    GetSafeUser, GetDataUser,
+    app
 }
 
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
 app.use(express.static("./public"));
 app.use('/gifs', express.static('./uploads'));
-app.use(cors({/*
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true); if (allowedOrigins.indexOf(origin) === -1) {
+app.use(cors({
+    /*origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
             const msg = 'The CORS policy for this site does not ' +
                 'allow access from the specified Origin.';
             return callback(new Error(msg), false);
         } return callback(null, true);
     },*/
+    origin: allowedOrigins,
     credentials: true
 }));
 
@@ -116,12 +139,12 @@ passport.use(require("./lib/passport/discordStrategy"))
 
 //app.use('/auth', require('./custom_routes/passportRoutes'))
 require('./lib/routerLoader.js')(app);
-/*
+
 // test multer errors
 app.use(function (err, req, res, next) {
     console.log('This is the invalid field ->', err.field)
     next(err)
-  })*/
+})
 
 /*
 db.schemas.Genre.create({

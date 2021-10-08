@@ -20,32 +20,33 @@ const gifUpload = multer({
         callback(null, true)
     }
 }).single('gif');
-
+/*
 Router.get('/upload', ensureAuthenticated, ensurePerms(['upload']), (req, res) => {
-    res.render('upload', { user: GetSafeUser(req.user) });
-});
+    res.render('upload', { user: GetSafeUser(req.user, true) });
+});*/
 
 Router.get('/user/uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
     const uploads = await GetUserUploads(req.user._id)
-    res.send({ user: GetSafeUser(req.user), uploads })
+    res.send({ user: GetSafeUser(req.user, true), uploads })
 })
 
 Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'access_user']), async (req, res) => {
     let user = await db.schemas.Users.findOne({ userid: req.params.id });
 
     const uploads = await GetUserUploads(user._id)
-    res.send({ user: GetSafeUser(req.user), uploader: GetSafeUser(user), uploads })
+    res.send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(user), uploads })
 })
 
 async function GetUserUploads(id) {
     return await db.schemas.Gifs.find({ user: { _id: id } })
 }
 
-Router.post('/upload', gifUpload, ensureAuthenticated, ensurePerms(['upload']), (req, res) => {
+Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, (req, res) => {
     const file = req.file;
 
     if (file === undefined) {
-        return res.render('upload', { status: "failed", file, user: GetSafeUser(req.user) })
+        //req.flash({status: 'failed'})
+        return res.send({ status: 'failed' })/*res.render('upload', { status: "failed", file, user: GetSafeUser(req.user, true) })*/
     }
 
     db.schemas.Gifs.create({
@@ -60,5 +61,7 @@ Router.post('/upload', gifUpload, ensureAuthenticated, ensurePerms(['upload']), 
     })
 
     //do this through client side:
-    res.render('upload', { status: "ok", file, user: GetSafeUser(req.user) })
+    //res.render('upload', { status: "ok", file, user: GetSafeUser(req.user, true) })
+    res.send({ status: "ok" })
+    //req.flash(req.origin)
 });

@@ -117,3 +117,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 /uploads
+
+#hide raw html files (for external css making)
+/views - html

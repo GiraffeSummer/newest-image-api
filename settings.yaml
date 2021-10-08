@@ -1,4 +1,6 @@
-appName: Image db
+appName: Gif Monkey
+baseUrl: http://localhost:3000
+frontEndUrl: http://localhost:5000/
 permissions:
   none: 0
   member: 1
