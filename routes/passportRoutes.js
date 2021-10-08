@@ -15,14 +15,14 @@ Router.get('/auth/logout', async (req, res) => {
     }
 });
 
-Router.get('/auth/discord', passport.authenticate('discord'));
+Router.get('/auth/discord', passport.authenticate('discord'), (req, res) => { });
 
 Router.get('/auth/discord/callback',
     passport.authenticate('discord', {
         successRedirect: redirectUrl, // + path if possible
         failureRedirect: redirectUrl,
     }
-    ),
+    ), passport.authenticate('discord'), (req, res) => { }
 );
 Router.get("/login", (req, res) => {/*
     res.render("login", { user: GetSafeUser(req.user, true) })*/
