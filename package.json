@@ -25,7 +25,7 @@
     "server-run": "nodemon index.js",
     "client-run": "cd client && npm run dev",
     "dev": "concurrently \"npm run server-run\" \"npm run client-run\"",
-    "build-server": "npm run client-build && npm run server-run"
+    "build-server": "npm run client-build && node index.js"
   },
   "keywords": [],
   "author": "",
