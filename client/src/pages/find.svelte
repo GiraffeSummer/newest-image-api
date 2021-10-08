@@ -2,7 +2,7 @@
   import { metatags } from '@roxi/routify';
   import { backend,safeFileName, user } from '../stores';
   import Navbar from '../components/navbar.svelte';
-  import Card from '../components/card.svelte';
+  import Card from '../components/Card.svelte';
 
   let tags = '';
   let result = '';
