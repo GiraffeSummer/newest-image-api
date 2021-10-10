@@ -10,6 +10,12 @@
   $: tags = safeFileName(tags);
   $: filename = safeFileName(filename);
 
+  //test, if tags contain nsfw it will check nsfw, if nsfw is checked it will not uncheck
+  $: isnsfw = [isnsfw, ...tags.split(',')].some((x) => {
+    if (typeof x == 'string') return x.toLowerCase() == 'nsfw';
+    else return x;
+  });
+
   const createMessage = (content = 'message', delay = 3) => {
     message = content;
     messageActive = true;
@@ -39,13 +45,12 @@
           credentials: 'include',
         });
         const res = await response.json();
-        console.log(res);
         const success = res.status == 'ok' || res.success;
         createMessage(
           `your upload ${success ? 'was successful' : 'failed try again!'}`
         );
         if (success) {
-          files.length = 0;
+          files = [];
           filename = '';
           isnsfw = false;
           tags = '';
