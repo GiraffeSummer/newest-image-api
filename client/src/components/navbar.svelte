@@ -5,7 +5,7 @@
 </script>
 
 <ul id="navbar">
-  <li><img src={backend + '/logo.png'} alt="" /></li>
+  <li><img src={ '/favicon.png'} alt="" /></li>
   <li><a href="/">Home</a></li>
   <li><a href="/find">Find</a></li>
   {#if $user?.permissions?.includes('upload')}
@@ -21,6 +21,6 @@
 
 <style>
   a:visited {
-    color: white;
+    color: var(--white);
   }
 </style>

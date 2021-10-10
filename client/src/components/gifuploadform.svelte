@@ -3,7 +3,7 @@
 
   const minTags = 1;
 
-  let isnsfw, filename, tagAmount,fileUpload;
+  let isnsfw, filename, tagAmount, fileUpload;
 
   let tags = '';
   $: tagAmount = tags.length > 1 ? tags.split(',').length : 0;
@@ -99,6 +99,7 @@
 
 <style>
   form {
+    color: var(--white);
     background-color: var(--background-color);
     width: 50vw;
     border-radius: 8px;

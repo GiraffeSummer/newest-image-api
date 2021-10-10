@@ -107,7 +107,6 @@ module.exports = {
 
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
-app.use(express.static("./public"));
 app.use('/gifs', express.static('./uploads'));
 app.use(cors({
     /*origin: function (origin, callback) {
