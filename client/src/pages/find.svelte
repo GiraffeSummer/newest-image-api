@@ -1,6 +1,6 @@
 <script>
   import { metatags } from '@roxi/routify';
-  import { backend,safeFileName, user } from '../stores';
+  import { backend, safeFileName, user } from '../stores';
   import Navbar from '../components/navbar.svelte';
   import Card from '../components/Card.svelte';
 
@@ -80,3 +80,10 @@
 {:else if lastSearch != ''}
   <h6><i>Nothing found...</i></h6>
 {/if}
+
+<style>
+  pre {
+    color: var(--ui-color);
+    font-weight: 500;
+  }
+</style>
