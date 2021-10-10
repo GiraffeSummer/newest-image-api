@@ -129,7 +129,7 @@ const SessionOpts = session({
     resave: true,
     store: MongoStore.create({ mongoUrl: 'mongodb://' + process.env.MONGODB_URI, collection: 'sessions', ttl: 24 * 60 * 60 }),
     saveUninitialized: true,
-    cookie: { secure: !DEVELOPMENT, maxAge: 8 * 60 * 60 * 1000 }
+    cookie: { secure: /*!DEVELOPMENT*/false/*This has to stay false, otherwise logins don't work*/ , maxAge: 8 * 60 * 60 * 1000 }
 })
 app.use(SessionOpts);
 app.use(passport.initialize());

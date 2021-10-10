@@ -11,7 +11,10 @@ if (process.env.NODE_ENV === 'production') {
 
     app.use(express.static('client/public'));
     app.use('/assets', express.static('client/dist/assets'));
-    Router.get('*', (req, res) => {
+
+    const routify_routes = require('../client/.routify/urlIndex.json');
+
+    Router.get(['/', ...routify_routes], (req, res) => {
         res.sendFile(path.resolve(process.cwd(), 'client', 'dist', 'index.html'));
     });
 

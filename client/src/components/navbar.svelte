@@ -1,4 +1,6 @@
 <script>
+  import { isActive, url } from '@roxi/routify';
+
   import { user, backend } from '../stores.js';
 </script>
 
@@ -10,9 +12,9 @@
     <li><a href="/upload">Upload</a></li>
   {/if}
   {#if $user == undefined || $user == null}
-    <li><a href={backend + '/auth/discord'}>Login</a></li>
+    <li><a target="_self" href={backend + '/auth/discord'}>Login</a></li>
   {:else}
-    <li><a href={backend + '/auth/logout'}>Logout</a></li>
+    <li><a target="_self" href={backend + '/auth/logout'}>Logout</a></li>
   {/if}
   <!--<li><a href="/account">Account</a></li>-->
 </ul>
