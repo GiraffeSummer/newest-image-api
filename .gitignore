@@ -120,3 +120,4 @@ dist
 
 #hide raw html files (for external css making)
 /views - html
+settings.yaml
