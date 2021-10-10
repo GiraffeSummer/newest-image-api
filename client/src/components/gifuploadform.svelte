@@ -3,7 +3,7 @@
 
   const minTags = 1;
 
-  let isnsfw, filename, tagAmount;
+  let isnsfw, filename, tagAmount,fileUpload;
 
   let tags = '';
   $: tagAmount = tags.length > 1 ? tags.split(',').length : 0;
@@ -50,6 +50,7 @@
           `your upload ${success ? 'was successful' : 'failed try again!'}`
         );
         if (success) {
+          fileUpload.value = null;
           files = [];
           filename = '';
           isnsfw = false;
@@ -84,6 +85,7 @@
     class="input form-control-file"
     name="gif"
     bind:files
+    bind:this={fileUpload}
   />
   <label for="nsfw">is NSFW</label>
   <input class="input" type="checkbox" name="nsfw" bind:checked={isnsfw} /><br
