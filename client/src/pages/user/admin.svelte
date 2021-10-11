@@ -10,7 +10,6 @@
       credentials: 'include',
     });
     let data = await res.json();
-    console.log(data);
     users = data.users;
     permissions = data.permissions;
     

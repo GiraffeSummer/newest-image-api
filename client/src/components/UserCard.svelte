@@ -7,7 +7,6 @@
   let message,
     messageActive = false;
   const updateUser = async () => {
-    console.log(user)
     const response = await fetch(backend + '/user/' + user._id, {
       method: 'POST',
       headers: {
