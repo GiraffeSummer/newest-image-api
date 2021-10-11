@@ -10,7 +10,7 @@
   metatags.description = 'User uploads';
 
   onMount(async () => {
-    const res = await fetch(backend + '/user/uploads', {
+    const res = await fetch(backend + '/user/file-uploads', {
       credentials: 'include',
     });
     let data = await res.json();

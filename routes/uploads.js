@@ -25,7 +25,7 @@ Router.get('/upload', ensureAuthenticated, ensurePerms(['upload']), (req, res) =
     res.render('upload', { user: GetSafeUser(req.user, true) });
 });*/
 
-Router.get('/user/uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
+Router.get('/user/file-uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
     const uploads = await GetUserUploads(req.user._id)
     res.send({ user: GetSafeUser(req.user, true), uploads })
 })
