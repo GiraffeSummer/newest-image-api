@@ -1,7 +1,6 @@
 <script>
   import { metatags } from '@roxi/routify';
   import { backend, safeFileName, user } from '../stores';
-  import Navbar from '../components/navbar.svelte';
   import Card from '../components/Card.svelte';
 
   let tags = '';
@@ -52,8 +51,6 @@
     if (e.key === 'Enter') cb(e);
   };
 </script>
-
-<Navbar />
 
 <input
   type="text"

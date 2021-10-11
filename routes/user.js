@@ -1,0 +1,56 @@
+
+const express = require('express');
+const Router = express.Router();
+const mongoose = require('mongoose');
+
+
+const { ensureAuthenticated, passport, db, ensurePerms, GetSafeUser, settings } = require("../index.js");
+
+const { CleanObject, HighestPermission, PermissionKeys } = require("../lib/functions.js");
+
+const perms = CleanObject(settings.get('permissions'), ['member', 'none', 'download', 'all_perms_allowed'], true)
+
+module.exports = Router;
+
+Router.get('/user/all', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
+    const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
+    const fullPerms = currentUser.permissions.includes('read_users');
+    let users = JSON.parse(JSON.stringify(await db.schemas.Users.find({})))
+
+    const HighestPerm = HighestPermission(currentUser);
+
+    if (!fullPerms) {
+        const allowedFields = ['username', 'avatar', 'joindate', 'permissions', '_id']
+        //filter out stuff like email
+        users = users.map(user => {
+            let temp = {}
+            for (const key in user) {
+                if (allowedFields.includes(key)) {
+                    temp[key] = user[key];
+                }
+            }
+            return temp;
+        })
+        users = users.filter(x => HighestPermission(x).index < HighestPerm.index);
+    } else users = users.filter(x => HighestPermission(x).index <= HighestPerm.index);
+
+    res.send({ user: GetSafeUser(req.user, true), PermissionKeys, permissions: perms, users })
+})
+
+Router.post('/user/:id', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
+    const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
+    const user = await db.schemas.Users.findOne({ _id: req.params.id });
+    if (currentUser == null || user == null || HighestPermission(currentUser).index < HighestPermission(user).index) return res.send({ status: 'failed' })
+
+    const permissions = Object.entries(req.body.permissions).filter(o => {
+        const key = o[0];
+        const value = o[1];
+        if (value) return key
+    }).map(o => o[0]);//very ugly I know, it works though
+    const doc = JSON.parse(JSON.stringify(await db.schemas.Users.findOneAndUpdate({ _id: user._id }, { permissions })))
+
+    const allowedFields = ['username', 'avatar', 'joindate', 'permissions', '_id']
+    doc.permissions = permissions;
+
+    res.send({ success: true, status: 'ok',user: GetSafeUser(req.user, true), permissions: perms, newuser: CleanObject(doc, allowedFields) })
+})

@@ -108,6 +108,7 @@ module.exports = {
 app.set('view engine', 'ejs');
 app.set('trust proxy', 1);
 app.use('/gifs', express.static('./uploads'));
+app.use('/global', express.static('./global'));
 app.use(cors({
     /*origin: function (origin, callback) {
         if (!origin) return callback(null, true);
@@ -120,7 +121,6 @@ app.use(cors({
     origin: allowedOrigins,
     credentials: true
 }));
-
 app.use(helmet());
 app.use(cookieParser(process.env.COOKIEKEY));
 const SessionOpts = session({
@@ -131,6 +131,7 @@ const SessionOpts = session({
     cookie: { secure: /*!DEVELOPMENT*/false/*This has to stay false, otherwise logins don't work*/ , maxAge: 8 * 60 * 60 * 1000 }
 })
 app.use(SessionOpts);
+app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -41,6 +41,29 @@ async function GetUserUploads(id) {
     return await db.schemas.Gifs.find({ user: { _id: id } })
 }
 
+function CleanTags(tags) {
+    return tags.split(',')
+        .map(x => x.trim().toLowerCase())
+        .filter(i => i != '')
+        .filter((item, pos, a) => a.indexOf(item) == pos)
+        .slice(0, 9)//haha stupid long line
+}
+
+Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
+    const { id: _id } = req.params;
+    const { changes, new: newData } = req.body;
+    const update = {};
+    if ([changes.nsfw, changes.tags, changes.name].every(x => x == false)) {
+        return res.send({ status: 'failed', message: 'nothing different' })
+    }
+    if (changes.nsfw) update.nsfw = newData.nsfw;
+    if (changes.tags) update.tags = CleanTags(newData.tags);
+    if (changes.name) update.name = newData.name;
+
+    let result = await db.schemas.Gifs.findOneAndUpdate({ _id }, update);
+    res.send({ status: 'ok', result })
+})
+
 Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, (req, res) => {
     const file = req.file;
 
@@ -57,7 +80,7 @@ Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, 
         size: file.size,
         nsfw: req.body.nsfw == 'on',
         user: new mongoose.Types.ObjectId(req.user._id),
-        tags: req.body.tags.split(',').map(x => x.trim().toLowerCase()).filter(i => i != '').filter((item, pos, a) => a.indexOf(item) == pos).slice(0, 9)//haha stupid long line
+        tags: CleanTags(req.body.tags)
     })
 
     //do this through client side:

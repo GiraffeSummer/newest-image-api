@@ -1,13 +1,11 @@
 <script>
   import { metatags } from '@roxi/routify';
-  import Navbar from '../components/navbar.svelte';
   import { backend } from '../stores.js';
 
   metatags.title = 'Gif Monkey';
   metatags.description = 'Api for (reaction) gifs';
 </script>
 
-<Navbar />
 <h1>Gif Monkey</h1>
 <p>
   Hello this is work in progress, but please try to log in upload something,

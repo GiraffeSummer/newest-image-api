@@ -1,7 +1,5 @@
 <script>
-  import { user, backend, safeFileName } from '../stores.js';
-
-  const minTags = 1;
+  import { user, backend, safeFileName, minTags } from '../stores.js';
 
   let isnsfw, filename, tagAmount, fileUpload;
 
