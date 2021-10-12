@@ -23,8 +23,8 @@
     "client-install": "cd client && npm install",
     "client-build": "cd client && npm run build",
     "server-run": "nodemon index.js",
-    "client-run": "cd client && npm run dev",
-    "dev": "concurrently \"npm run server-run\" \"npm run client-run\"",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server-run\" \"npm run client\"",
     "build-server": "npm run client-build && node index.js"
   },
   "keywords": [],

@@ -5,6 +5,7 @@ const { storage, multer } = require('../lib/multer');
 const mongoose = require('mongoose');
 
 const filters = require('../lib/fileFilters');
+const maxTags = 20;//10
 
 const { ensureAuthenticated, passport, db, ensurePerms, GetSafeUser } = require("../index.js");
 
@@ -31,7 +32,7 @@ Router.get('/user/file-uploads', ensureAuthenticated, ensurePerms(['upload']), a
 })
 
 Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'access_user']), async (req, res) => {
-    let user = await db.schemas.Users.findOne({ userid: req.params.id });
+    let user = await db.schemas.Users.findOne({ _id: req.params.id });
 
     const uploads = await GetUserUploads(user._id)
     res.send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(user), uploads })
@@ -46,7 +47,7 @@ function CleanTags(tags) {
         .map(x => x.trim().toLowerCase())
         .filter(i => i != '')
         .filter((item, pos, a) => a.indexOf(item) == pos)
-        .slice(0, 9)//haha stupid long line
+        //haha stupid long line
 }
 
 Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
@@ -57,7 +58,7 @@ Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), 
         return res.send({ status: 'failed', message: 'nothing different' })
     }
     if (changes.nsfw) update.nsfw = newData.nsfw;
-    if (changes.tags) update.tags = CleanTags(newData.tags);
+    if (changes.tags) update.tags = CleanTags(newData.tags).slice(0, maxTags);
     if (changes.name) update.name = newData.name;
 
     let result = await db.schemas.Gifs.findOneAndUpdate({ _id }, update);

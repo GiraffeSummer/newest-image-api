@@ -4,6 +4,7 @@ export const backend = import.meta.env.VITE_backend;
 export const user = writable({});
 
 export const minTags = 1;
+export const maxTags = 20;
 
 export const safeFileName = (text) => {
     if (text == '' || text == undefined) return text;

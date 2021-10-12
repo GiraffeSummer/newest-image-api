@@ -1,5 +1,5 @@
 <script>
-  import { user, backend, safeFileName, minTags } from '../stores.js';
+  import { user, backend, safeFileName, minTags, maxTags } from '../stores.js';
 
   let isnsfw, filename, tagAmount, fileUpload;
 
@@ -88,7 +88,7 @@
   <label for="nsfw">is NSFW</label>
   <input class="input" type="checkbox" name="nsfw" bind:checked={isnsfw} /><br
   />
-  <label for="tags">tags: (split with ,) (min {minTags} max 10)</label>
+  <label for="tags">tags: (split with ,) (min {minTags} max {maxTags})</label>
   <input type="text" id="tags" name="tags" bind:value={tags} />
   {tagAmount}
   <br />

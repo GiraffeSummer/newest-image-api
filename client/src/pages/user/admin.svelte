@@ -1,5 +1,5 @@
 <script>
-  import { user, backend, SetPermKeys } from '../../stores.js';
+  import { user, backend, SetPermKeys,objectMap } from '../../stores.js';
   import UserCard from '../../components/UserCard.svelte';
   import { onMount } from 'svelte';
   let users = [];
@@ -11,8 +11,7 @@
     });
     let data = await res.json();
     users = data.users;
-    permissions = data.permissions;
-    
+    permissions = objectMap(data.permissions, $user.permissions);
     SetPermKeys(data.PermissionKeys);
   });
 </script>

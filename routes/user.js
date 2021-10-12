@@ -12,6 +12,21 @@ const perms = CleanObject(settings.get('permissions'), ['member', 'none', 'downl
 
 module.exports = Router;
 
+Router.get('/user/all/content', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
+    const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
+    let users = JSON.parse(JSON.stringify(await db.schemas.Users.find({})))
+
+    const HighestPerm = HighestPermission(currentUser);
+
+    const allowedFields = ['username', 'avatar','permissions', 'joindate', '_id'];
+
+    users = users.filter(x => HighestPermission(x).index < HighestPerm.index);
+    users = users.map(user => CleanObject(user, allowedFields))
+    users = [CleanObject(currentUser, allowedFields), ...users]
+
+    res.send({ user: GetSafeUser(req.user, true), users })
+})
+
 Router.get('/user/all', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
     const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
     const fullPerms = currentUser.permissions.includes('read_users');
@@ -22,16 +37,8 @@ Router.get('/user/all', ensureAuthenticated, ensurePerms(['manage_user']), async
     if (!fullPerms) {
         const allowedFields = ['username', 'avatar', 'joindate', 'permissions', '_id']
         //filter out stuff like email
-        users = users.map(user => {
-            let temp = {}
-            for (const key in user) {
-                if (allowedFields.includes(key)) {
-                    temp[key] = user[key];
-                }
-            }
-            return temp;
-        })
-        users = users.filter(x => HighestPermission(x).index < HighestPerm.index);
+        users = users.map(user => CleanObject(user, allowedFields))
+            .filter(x => HighestPermission(x).index < HighestPerm.index);
     } else users = users.filter(x => HighestPermission(x).index <= HighestPerm.index);
 
     res.send({ user: GetSafeUser(req.user, true), PermissionKeys, permissions: perms, users })
@@ -52,5 +59,5 @@ Router.post('/user/:id', ensureAuthenticated, ensurePerms(['manage_user']), asyn
     const allowedFields = ['username', 'avatar', 'joindate', 'permissions', '_id']
     doc.permissions = permissions;
 
-    res.send({ success: true, status: 'ok',user: GetSafeUser(req.user, true), permissions: perms, newuser: CleanObject(doc, allowedFields) })
+    res.send({ success: true, status: 'ok', user: GetSafeUser(req.user, true), permissions: perms, newuser: CleanObject(doc, allowedFields) })
 })
