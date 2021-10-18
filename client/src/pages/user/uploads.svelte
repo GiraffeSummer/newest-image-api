@@ -36,6 +36,17 @@
     const data = await res.json();
     return data;
   };
+
+  const deleteGif = (evt) => {
+    const filter = (g) => {
+      return g._id != evt.detail.gif._id;
+    };
+    if (userData.user._id == selected) {
+      userData.uploads = userData.uploads.filter(filter);
+    } else {
+      userUploads.uploads = userUploads.uploads.filter(filter);
+    }
+  };
 </script>
 
 {#if userData != {} && Array.isArray(userData?.uploads) && users.length >= 0}
@@ -59,12 +70,12 @@
 
   {#if userData.user._id == selected}
     {#each userData.uploads as gif}
-      <Upload {gif} />
+      <Upload {gif} on:deletegif={deleteGif} />
     {/each}
   {:else}
     {#await request then userUploads}
       {#each userUploads.uploads as gif}
-        <Upload {gif} />
+        <Upload {gif} on:deletegif={deleteGif} />
       {:else}
         <br />
         <b>{userUploads.uploader.username} has no uploads</b>

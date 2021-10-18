@@ -40,8 +40,6 @@ input, button, select, textarea {
 	padding: 0.4em;
 	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
-	border: 1px solid var(--white);
-	border-radius: 2px;
 }
 
 input:disabled {
@@ -171,8 +169,6 @@ div.uploads {
     margin-bottom: 10px;
     padding: 10px;
     max-width: 300px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
+    border: 2px black solid;
     border-radius: 4px;
 }

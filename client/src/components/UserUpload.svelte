@@ -8,6 +8,11 @@
     objectMap,
     maxTags,
   } from '../stores.js';
+
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
+
   export let gif;
 
   const updateGif = async () => {
@@ -64,6 +69,28 @@
     return res;
   };
 
+  const deleteUpload = async () => {
+    const c = confirm(`Are you sure you want to delete '${gif.name}'?`);
+
+    if (c) {
+      const response = await fetch(backend + '/update-upload/' + gif._id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ confirm: c }),
+        credentials: 'include',
+      });
+      const res = await response.json();
+      if (res.status == 'ok') {
+        dispatch('deletegif', {
+          gif,
+        });
+        createMessage('successfully deleted');
+      }
+    }
+  };
+
   const validUpdate = () => {
     return filename.length >= 3 && tagAmount >= minTags;
   };
@@ -95,6 +122,9 @@
     <button type="submit" tabindex="-1" class="create" enabled={validUpdate}
       >Update</button
     >
+    <button type="button" tabindex="-1" class="delete" on:click={deleteUpload}
+      >Delete</button
+    >
   </form>
 </div>
 
@@ -112,5 +142,10 @@
   }
   form {
     border: none;
+  }
+
+  .delete {
+    background-color: firebrick;
+    color: var(--white);
   }
 </style>

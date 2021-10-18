@@ -47,7 +47,7 @@ function CleanTags(tags) {
         .map(x => x.trim().toLowerCase())
         .filter(i => i != '')
         .filter((item, pos, a) => a.indexOf(item) == pos)
-        //haha stupid long line
+    //haha stupid long line
 }
 
 Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
@@ -62,6 +62,20 @@ Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), 
     if (changes.name) update.name = newData.name;
 
     let result = await db.schemas.Gifs.findOneAndUpdate({ _id }, update);
+    res.send({ status: 'ok', result })
+})
+
+Router.delete('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
+    const { id: _id } = req.params;
+    const confirmed = req.body.confirm;
+
+
+    if (!confirmed) {
+        return res.send({ status: 'failed', message: 'nothing different' })
+    }
+
+    let result = await db.schemas.Gifs.deleteOne({ _id });
+
     res.send({ status: 'ok', result })
 })
 

@@ -1,5 +1,5 @@
 <script>
-  import { user, backend, SetPermKeys,objectMap } from '../../stores.js';
+  import { user, backend, SetPermKeys, objectMap } from '../../stores.js';
   import UserCard from '../../components/UserCard.svelte';
   import { onMount } from 'svelte';
   let users = [];
@@ -18,5 +18,6 @@
 
 {#if users.length > 0}
   {#each users as user}
-    <UserCard {user} {permissions} />{/each}
+    <UserCard {user} {permissions} />
+  {/each}
 {/if}

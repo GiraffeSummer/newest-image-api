@@ -101,5 +101,6 @@
     background-color: var(--background-color);
     width: 50vw;
     border-radius: 8px;
+    border:none;
   }
 </style>
