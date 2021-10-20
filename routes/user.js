@@ -2,13 +2,13 @@
 const express = require('express');
 const Router = express.Router();
 const mongoose = require('mongoose');
-
+const Permissions = require('../lib/permissions');
 
 const { ensureAuthenticated, passport, db, ensurePerms, GetSafeUser, settings } = require("../index.js");
 
 const { CleanObject, HighestPermission, PermissionKeys } = require("../lib/functions.js");
 
-const perms = CleanObject(settings.get('permissions'), ['member', 'none', 'download', 'all_perms_allowed'], true)
+const perms = CleanObject(Permissions, ['member', 'none', 'download', 'all_perms_allowed'], true)
 
 module.exports = Router;
 
