@@ -3,6 +3,7 @@ const express = require('express');
 const Router = express.Router();
 const { storage, multer } = require('../lib/multer');
 const mongoose = require('mongoose');
+const { log } = require('../lib/logger');
 
 const filters = require('../lib/fileFilters');
 const maxTags = 20;//10
@@ -62,6 +63,9 @@ Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), 
     if (changes.name) update.name = newData.name;
 
     let result = await db.schemas.Gifs.findOneAndUpdate({ _id }, update);
+
+    log('update-upload:success', req.user._id, { changes, update, result });
+
     res.send({ status: 'ok', result })
 })
 
@@ -71,15 +75,18 @@ Router.delete('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload'])
 
 
     if (!confirmed) {
+        log('delete-upload:failed', req.user._id, { confirmed });
         return res.send({ status: 'failed', message: 'nothing different' })
     }
-
+    const toDelete = await await db.schemas.Gifs.findOne({ _id });
     let result = await db.schemas.Gifs.deleteOne({ _id });
+
+    log('delete-upload:success', req.user._id, { id: _id, result: toDelete });
 
     res.send({ status: 'ok', result })
 })
 
-Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, (req, res) => {
+Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, async (req, res) => {
     const file = req.file;
 
     if (file === undefined) {
@@ -87,7 +94,7 @@ Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, 
         return res.send({ status: 'failed' })/*res.render('upload', { status: "failed", file, user: GetSafeUser(req.user, true) })*/
     }
 
-    db.schemas.Gifs.create({
+    const result = await db.schemas.Gifs.create({
         name: req.body.name,
         originalname: file.originalname,
         filename: file.filename,
@@ -97,6 +104,8 @@ Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, 
         user: new mongoose.Types.ObjectId(req.user._id),
         tags: CleanTags(req.body.tags)
     })
+
+    log('upload:success', req.user._id, { body: req.body, file, result });
 
     //do this through client side:
     //res.render('upload', { status: "ok", file, user: GetSafeUser(req.user, true) })

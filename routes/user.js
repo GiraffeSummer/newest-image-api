@@ -2,6 +2,7 @@
 const express = require('express');
 const Router = express.Router();
 const mongoose = require('mongoose');
+const { log } = require('../lib/logger');
 const Permissions = require('../lib/permissions');
 
 const { ensureAuthenticated, passport, db, ensurePerms, GetSafeUser, settings } = require("../index.js");
@@ -18,7 +19,7 @@ Router.get('/user/all/content', ensureAuthenticated, ensurePerms(['manage_user']
 
     const HighestPerm = HighestPermission(currentUser);
 
-    const allowedFields = ['username', 'avatar','permissions', 'joindate', '_id'];
+    const allowedFields = ['username', 'avatar', 'permissions', 'joindate', '_id'];
 
     users = users.filter(x => HighestPermission(x).index < HighestPerm.index);
     users = users.map(user => CleanObject(user, allowedFields))
@@ -58,6 +59,8 @@ Router.post('/user/:id', ensureAuthenticated, ensurePerms(['manage_user']), asyn
 
     const allowedFields = ['username', 'avatar', 'joindate', 'permissions', '_id']
     doc.permissions = permissions;
+
+    log('update-user:success', req.user._id, { user, newperms: permissions });
 
     res.send({ success: true, status: 'ok', user: GetSafeUser(req.user, true), permissions: perms, newuser: CleanObject(doc, allowedFields) })
 })
