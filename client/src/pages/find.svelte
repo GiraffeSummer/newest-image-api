@@ -20,7 +20,7 @@
   metatags.description = '';
   const getData = async () => {
     if (!canSearch) return;
-
+console.log(showNsfw)
     lastSearch = `${tags}`;
     const res = await fetch(backend + '/find/' + tags + `${(showNsfw) ? '?nsfw=true' : ''}`, {
       credentials: 'include',
@@ -62,8 +62,7 @@
     checkEnter(e, getData);
   }}
 /> 
- <label for="showNsfw">Show Nsfw?</label>
-  <input id="showNsfw" type=checkbox bind:checked={showNsfw}/>
+ <label for="showNsfw">Show Nsfw? <input id="showNsfw" type=checkbox bind:checked={showNsfw}/></label>  
 <button on:click={getData} id="searchBtn">Search</button>
 <br /><br />
 {#if gifImages.length > 0}
