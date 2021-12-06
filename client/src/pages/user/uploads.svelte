@@ -7,6 +7,7 @@
   let users = [];
 
   let selected;
+  let showNsfw = false;
 
   let userData = {};
 
@@ -67,7 +68,8 @@
   {:else}
     <h3>{userData.user.username}'s uploads</h3>
   {/if}
-
+  <label for="showNsfw" value="Show Nsfw?">
+  <input name="showNsfw" type=checkbox bind:checked={showNsfw}>
   {#if userData.user._id == selected}
     {#each userData.uploads as gif}
       <Upload {gif} on:deletegif={deleteGif} />
