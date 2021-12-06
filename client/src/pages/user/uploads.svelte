@@ -74,7 +74,7 @@
     Show Nsfw?      
   </label >
   
-  {#if userData.user._id == selected}
+  {#if false}
     {#each userData.uploads as gif}
       <Upload {gif} on:deletegif={deleteGif} />
     {/each}
