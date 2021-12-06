@@ -44,7 +44,9 @@
 <div class="card">
   <h3>{user.username}</h3>
   <form class="form" on:submit|preventDefault={updateUser}>
-    <img src={user.avatar} alt={user.username} on:error={(el)=>{el.src='./favicon.png'}}/>
+   <object data="{user.avatar}" type="image/png">
+      <img src="/favicon.png" alt="{user.username}">
+    </object>
     <h5><b>Permissions:</b></h5>
     <ul>
       {#each Object.entries(permissions) as [perm, desc]}
