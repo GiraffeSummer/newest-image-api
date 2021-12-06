@@ -30,7 +30,7 @@ Router.get('/upload', ensureAuthenticated, ensurePerms(['upload']), (req, res) =
 Router.get('/user/file-uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
     const nsfw = req.query.nsfw == 'true' || false;
     const uploads = await GetUserUploads(req.user._id, nsfw);
-    res.send({ user: GetSafeUser(req.user, true), uploads })
+    res.send({ user: { ...GetSafeUser(req.user, true), _id: req.user._id }, uploads })
 })
 
 Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'access_user']), async (req, res) => {
