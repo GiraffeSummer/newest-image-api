@@ -15,7 +15,7 @@
   metatags.description = 'User uploads';
 
   onMount(async () => {
-    const res = await fetch(backend + '/user/file-uploads' + (showNsfw) ? '?nsfw=true' : '' , {
+    const res = await fetch(backend + '/user/file-uploads' , {
       credentials: 'include',
     });
     let data = await res.json();
@@ -30,8 +30,9 @@
   });
 
   let request = undefined;
+  //+ (showNsfw) ? '?nsfw=true' : ''
   const GetUserUploads = async () => {
-    const res = await fetch(backend + '/user/uploads/' + selected  + (showNsfw) ? '?nsfw=true' : '', {
+    const res = await fetch(backend + '/user/uploads/' + selected , {
       credentials: 'include',
     });
     const data = await res.json();
