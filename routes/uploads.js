@@ -28,21 +28,21 @@ Router.get('/upload', ensureAuthenticated, ensurePerms(['upload']), (req, res) =
 });*/
 
 Router.get('/user/file-uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
-    const nsfw = req.query.nsfw || false;
+    const nsfw = req.query.nsfw == 'true' || false;
     const uploads = await GetUserUploads(req.user._id, nsfw);
     res.send({ user: GetSafeUser(req.user, true), uploads })
 })
 
 Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'access_user']), async (req, res) => {
     let user = await db.schemas.Users.findOne({ _id: req.params.id });
-    const nsfw = req.query.nsfw || false;
+    const nsfw = req.query.nsfw == 'true' || false;
 
     const uploads = await GetUserUploads(user._id, nsfw);
     res.send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(user), uploads })
 })
 
 async function GetUserUploads(id, nsfw = false) {
-    const query = (nsfw) ?{ user: { _id: id } } : { user: { _id: id }, nsfw: false};
+    const query = (nsfw) ? { user: { _id: id } } : { user: { _id: id }, nsfw: false };
     return await db.schemas.Gifs.find(query)
 }
 
