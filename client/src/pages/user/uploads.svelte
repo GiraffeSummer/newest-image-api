@@ -20,6 +20,7 @@
     });
     let data = await res.json();
     userData = data;
+    userUploads = userData;
     selected = userData.user._id;
 
     const getUsers = await fetch(backend + '/user/all/content', {
