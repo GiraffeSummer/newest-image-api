@@ -70,12 +70,9 @@
     <h3>{userData.user.username}'s uploads</h3>
   {/if}
   <label for="showNsfw">
-  <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {
-    console.log(selected)
-        request = GetUserUploads();
-      }}  />
-      Show Nsfw?      
-      </label >
+    <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => request = GetUserUploads() } />
+    Show Nsfw?      
+  </label >
   
   {#if userData.user._id == selected}
     {#each userData.uploads as gif}
