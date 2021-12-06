@@ -31,7 +31,7 @@ Router.get('/find/:search', async (req, res) => {
         //need to improve this, reference object without linking
         let x = JSON.parse(JSON.stringify(r));
         x.user = GetSafeUser(x.user, false);//fix path
-        x.url = baseUrl + x.path;
+        x.url = encodeURIComponent(baseUrl + x.path);
         delete x.path;
         //return x;
         gifs.push(x);
