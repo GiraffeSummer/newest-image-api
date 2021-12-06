@@ -71,7 +71,8 @@
   {/if}
   <label for="showNsfw">Show Nsfw?</label >
   <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {
-     request = GetUserUploads();
+    console.log(selected);
+        if (userData.user._id != selected) request = GetUserUploads();
       }}  />
   {#if userData.user._id == selected}
     {#each userData.uploads as gif}

@@ -5,6 +5,7 @@
 
   let tags = '';
   let result = '';
+  let showNsfw = false;
 
   $: tags = safeFileName(tags);
 
@@ -21,7 +22,7 @@
     if (!canSearch) return;
 
     lastSearch = `${tags}`;
-    const res = await fetch(backend + '/find/' + tags, {
+    const res = await fetch(backend + '/find/' + tags + `${(showNsfw) ? '?nsfw=true' : ''}`, {
       credentials: 'include',
     });
     const json = await res.json();
@@ -60,7 +61,9 @@
   on:keydown={(e) => {
     checkEnter(e, getData);
   }}
-/>
+/> 
+ <label for="showNsfw">Show Nsfw?</label>
+  <input id="showNsfw" type=checkbox bind:checked={showNsfw}/>
 <button on:click={getData} id="searchBtn">Search</button>
 <br /><br />
 {#if gifImages.length > 0}
