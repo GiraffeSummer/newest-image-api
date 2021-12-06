@@ -121,14 +121,21 @@ app.use(cors({
     origin: allowedOrigins,
     credentials: true
 }));
-app.use(helmet());
+app.use(
+    helmet.contentSecurityPolicy({
+        useDefaults: true,
+        directives: {
+            "img-src": ["'self'", "https://cdn.discordapp.com/"],            
+        },
+    })
+);
 app.use(cookieParser(process.env.COOKIEKEY));
 const SessionOpts = session({
     secret: process.env.COOKIEKEY,
     resave: true,
     store: MongoStore.create({ mongoUrl: 'mongodb://' + process.env.MONGODB_URI, collection: 'sessions', ttl: 24 * 60 * 60 }),
     saveUninitialized: true,
-    cookie: { secure: /*!DEVELOPMENT*/false/*This has to stay false, otherwise logins don't work*/ , maxAge: 8 * 60 * 60 * 1000 }
+    cookie: { secure: /*!DEVELOPMENT*/false/*This has to stay false, otherwise logins don't work*/, maxAge: 8 * 60 * 60 * 1000 }
 })
 app.use(SessionOpts);
 app.use(express.json());
