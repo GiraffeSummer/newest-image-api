@@ -127,7 +127,7 @@ app.use(
         contentSecurityPolicy: {
             directives: {
                 ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-                'img-src': ['\'self\'', 'http://*', 'https://*', 'https://cdn.discordapp.com'],
+                'img-src': ["'self'", 'https://cdn.discordapp.com/'],
             },
         },
     })
