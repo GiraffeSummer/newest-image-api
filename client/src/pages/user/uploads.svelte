@@ -15,7 +15,7 @@
   metatags.description = 'User uploads';
 
   onMount(async () => {
-    const res = await fetch(backend + '/user/file-uploads', {
+    const res = await fetch(backend + '/user/file-uploads' (showNsfw) ?'?nsfw=true' :'', {
       credentials: 'include',
     });
     let data = await res.json();
@@ -31,7 +31,7 @@
 
   let request = undefined;
   const GetUserUploads = async () => {
-    const res = await fetch(backend + '/user/uploads/' + selected, {
+    const res = await fetch(backend + '/user/uploads/' + selected  + (showNsfw) ?'?nsfw=true' :'', {
       credentials: 'include',
     });
     const data = await res.json();
@@ -69,7 +69,9 @@
     <h3>{userData.user.username}'s uploads</h3>
   {/if}
   <label for="showNsfw" value="Show Nsfw?"/>
-  <input name="showNsfw" type=checkbox bind:checked={showNsfw}/>
+  <input name="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {
+        if (userData.user._id != selected) request = GetUserUploads();
+      }}/>
   {#if userData.user._id == selected}
     {#each userData.uploads as gif}
       <Upload {gif} on:deletegif={deleteGif} />
