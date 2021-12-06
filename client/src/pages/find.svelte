@@ -62,7 +62,10 @@ console.log(showNsfw)
     checkEnter(e, getData);
   }}
 /> 
- <label for="showNsfw">Show Nsfw? <input id="showNsfw" type=checkbox bind:checked={showNsfw}/></label>  
+ <label for="showNsfw">
+  <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={()=>canSearch = true;}/>
+ Show Nsfw?
+  </label>  
 <button on:click={getData} id="searchBtn">Search</button>
 <br /><br />
 {#if gifImages.length > 0}
