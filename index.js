@@ -123,7 +123,7 @@ app.use(cors({
 }));
 app.use(helmet({
     contentSecurityPolicy: false,
-}));
+}));/*
 app.use(
     helmet.contentSecurityPolicy({
         useDefaults: true,
@@ -131,7 +131,7 @@ app.use(
             "img-src": ["'self'", "discordapp.com", "cdn.discordapp.com"],
         },
     })
-);
+);*/
 
 app.use(cookieParser(process.env.COOKIEKEY));
 const SessionOpts = session({
