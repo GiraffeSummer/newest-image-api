@@ -121,12 +121,16 @@ app.use(cors({
     origin: allowedOrigins,
     credentials: true
 }));
+
 app.use(
     helmet({
         contentSecurityPolicy: {
             directives: {
                 ...helmet.contentSecurityPolicy.getDefaultDirectives(),
                 "img-src": ["'self'", "cdn.discordapp.com"],
+                imgSrc: [],
+                defaultSrc: ["'self'"],
+                "default-src": ["'self'"]
             },
         },
     })
