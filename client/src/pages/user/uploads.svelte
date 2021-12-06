@@ -71,7 +71,8 @@
   {/if}
   <label for="showNsfw">
   <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {
-        if (selected != undefined) request = GetUserUploads();
+    console.log(selected)
+        request = GetUserUploads();
       }}  />
       Show Nsfw?      
       </label >
