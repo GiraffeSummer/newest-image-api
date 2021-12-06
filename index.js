@@ -123,10 +123,17 @@ app.use(cors({
 }));
 app.use(helmet({
     contentSecurityPolicy: false,
-}));/*
+}));
 app.use(
     helmet.contentSecurityPolicy({
         useDefaults: true,
+        directives: {
+            "img-src": ["'self'", "data:"],
+        },
+    })
+);/*
+app.use(
+    helmet.contentSecurityPolicy({
         directives: {
             "img-src": ["'self'", "discordapp.com", "cdn.discordapp.com"],
         },
