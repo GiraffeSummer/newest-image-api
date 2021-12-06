@@ -69,9 +69,9 @@
   {:else}
     <h3>{userData.user.username}'s uploads</h3>
   {/if}
-  <label for="showNsfw" value="Show Nsfw?" />
+  <label for="showNsfw">Show Nsfw?</label >
   <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {
-     if (userData.user._id != selected) request = GetUserUploads();
+     request = GetUserUploads();
       }}  />
   {#if userData.user._id == selected}
     {#each userData.uploads as gif}
