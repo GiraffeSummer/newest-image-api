@@ -121,14 +121,18 @@ app.use(cors({
     origin: allowedOrigins,
     credentials: true
 }));
+app.use(helmet({
+    contentSecurityPolicy: false,
+}));
 app.use(
     helmet.contentSecurityPolicy({
         useDefaults: true,
         directives: {
-            "img-src": ["'self'", "https://cdn.discordapp.com/"],            
+            "img-src": ["'self'", "discordapp.com", "cdn.discordapp.com"],
         },
     })
 );
+
 app.use(cookieParser(process.env.COOKIEKEY));
 const SessionOpts = session({
     secret: process.env.COOKIEKEY,
