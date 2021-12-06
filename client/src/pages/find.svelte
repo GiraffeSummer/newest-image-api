@@ -63,7 +63,7 @@ console.log(showNsfw)
   }}
 /> 
  <label for="showNsfw">
-  <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={()=>canSearch = true;}/>
+  <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={()=>canSearch = true}/>
  Show Nsfw?
   </label>  
 <button on:click={getData} id="searchBtn">Search</button>
