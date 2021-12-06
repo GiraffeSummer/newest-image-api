@@ -58,10 +58,7 @@
   {#if userData.user.permissions.includes('manage_user')}
     <select
       bind:value={selected}
-      on:change={() => {
-        if (userData.user._id != selected) request = GetUserUploads();
-      }}
-    >
+      on:change={() => request = GetUserUploads()} >
       {#each users as user}
         <option value={user._id}>
           {user.username}
