@@ -10,9 +10,11 @@ Router.get('/get', (req, res) => {
 const baseUrl = settings.get('baseUrl')
 Router.get('/find/:search', async (req, res) => {
     let { search } = req.params;
+    const nsfw = req.query.nsfw || false;
 
     search = search.split(',').map(x => x.trim().toLowerCase());
 
+    
     const query = {
         $or: [
             { "name": { "$regex": search.join(' '), "$options": "i" } },
@@ -20,6 +22,7 @@ Router.get('/find/:search', async (req, res) => {
             { "tags": { "$in": [...search] } },
         ]
     }
+    if(!nsfw) query.nsfw = false;
     const results = await db.schemas.Gifs.find(query).populate('user');
     let gifs = [];
 

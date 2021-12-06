@@ -20,7 +20,7 @@
     });
     let data = await res.json();
     userData = data;
-    selected = data.user._id;
+    selected = userData.user._id;
 
     const getUsers = await fetch(backend + '/user/all/content', {
       credentials: 'include',
