@@ -20,7 +20,7 @@
   metatags.description = '';
   const getData = async () => {
     if (!canSearch) return;
-console.log(showNsfw)
+
     lastSearch = `${tags}`;
     const res = await fetch(backend + '/find/' + tags + `${(showNsfw) ? '?nsfw=true' : ''}`, {
       credentials: 'include',
