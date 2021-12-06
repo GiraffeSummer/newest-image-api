@@ -59,7 +59,6 @@
     <select
       bind:value={selected}
       on:change={() => {
-        console.log(selected);
         if (userData.user._id != selected) request = GetUserUploads();
       }}
     >
