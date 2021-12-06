@@ -15,6 +15,7 @@
   metatags.description = 'User uploads';
 
   onMount(async () => {
+    //no not need to get user uploads anymore
     const res = await fetch(backend + '/user/file-uploads' + `${(showNsfw) ? '?nsfw=true' : ''}` , {
       credentials: 'include',
     });
@@ -85,3 +86,4 @@
     <b>{userUploads.uploader.username} has no uploads</b>
   {/each}
 {/await}
+  {/if}
