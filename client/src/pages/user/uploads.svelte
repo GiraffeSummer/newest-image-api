@@ -21,7 +21,6 @@
     let data = await res.json();
     userData = data;
     selected = userData.user._id;
-    console.log(selected,userData)
 
     const getUsers = await fetch(backend + '/user/all/content', {
       credentials: 'include',
@@ -72,7 +71,7 @@
   {/if}
   <label for="showNsfw">
   <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {
-        if (userData.user._id != selected) request = GetUserUploads();
+        if (selected != undefined) request = GetUserUploads();
       }}  />
       Show Nsfw?      
       </label >
