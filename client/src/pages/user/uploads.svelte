@@ -70,7 +70,7 @@
     <h3>{userData.user.username}'s uploads</h3>
   {/if}
   <label for="showNsfw">
-    <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => request = GetUserUploads() } />
+    <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => {constole.log('toggle'); request = GetUserUploads();} } />
     Show Nsfw?      
   </label >
   
