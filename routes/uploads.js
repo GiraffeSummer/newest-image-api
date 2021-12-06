@@ -37,12 +37,14 @@ Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'acc
     let user = await db.schemas.Users.findOne({ _id: req.params.id });
     const nsfw = req.query.nsfw == 'true' || false;
 
+    console.log(nsfw,req,query);
+
     const uploads = await GetUserUploads(user._id, nsfw);
     res.send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(user), uploads })
 })
 
 async function GetUserUploads(id, nsfw = false) {
-    const query = (nsfw) ? { user: { _id: id } } : { user: { _id: id }, nsfw: false };
+    const query = (nsfw) ? { user: { _id: id } } : {nsfw: false, user: { _id: id }  };
     return await db.schemas.Gifs.find(query)
 }
 
