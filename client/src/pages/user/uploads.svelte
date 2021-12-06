@@ -20,8 +20,9 @@
     });
     let data = await res.json();
     userData = data;
-    userUploads = userData;
     selected = userData.user._id;
+
+    request = GetUserUploads();
 
     const getUsers = await fetch(backend + '/user/all/content', {
       credentials: 'include',
@@ -75,18 +76,12 @@
     Show Nsfw?      
   </label >
   
-  {#if false}
-    {#each userData.uploads as gif}
-      <Upload {gif} on:deletegif={deleteGif} />
-    {/each}
+
+{#await request then userUploads}
+  {#each userUploads.uploads as gif}
+    <Upload {gif} on:deletegif={deleteGif} />
   {:else}
-    {#await request then userUploads}
-      {#each userUploads.uploads as gif}
-        <Upload {gif} on:deletegif={deleteGif} />
-      {:else}
-        <br />
-        <b>{userUploads.uploader.username} has no uploads</b>
-      {/each}
-    {/await}
-  {/if}
-{/if}
+    <br />
+    <b>{userUploads.uploader.username} has no uploads</b>
+  {/each}
+{/await}
