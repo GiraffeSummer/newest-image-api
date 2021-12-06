@@ -121,24 +121,16 @@ app.use(cors({
     origin: allowedOrigins,
     credentials: true
 }));
-app.use(helmet({
-    contentSecurityPolicy: false,
-}));
 app.use(
-    helmet.contentSecurityPolicy({
-        useDefaults: true,
-        directives: {
-            "img-src": ["'self'", "data:"],
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+                "img-src": ["'self'", "cdn.discordapp.com"],
+            },
         },
     })
-);/*
-app.use(
-    helmet.contentSecurityPolicy({
-        directives: {
-            "img-src": ["'self'", "discordapp.com", "cdn.discordapp.com"],
-        },
-    })
-);*/
+);
 
 app.use(cookieParser(process.env.COOKIEKEY));
 const SessionOpts = session({
