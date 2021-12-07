@@ -79,6 +79,9 @@
       </div>
     </Card>
   {/each}
+  {#if nsfwResults != undefined }
+ <i>{nsfwResults} more NSFW</i>
+  {/if}
   <br />
   <h3>Raw:</h3>
   <div id="code"><pre>{result}</pre></div>
