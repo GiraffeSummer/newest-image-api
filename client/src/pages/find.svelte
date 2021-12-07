@@ -6,6 +6,7 @@
   let tags = '';
   let result = '';
   let showNsfw = false;
+  let nsfwResults = undefined;
 
   $: tags = safeFileName(tags);
 
@@ -31,6 +32,8 @@
       delete a.__v;
       return a;
     });
+
+   nsfwResults = json.nsfwResults;
 
     /*
     for (let i = 0; i < gifs.length; i++) {
@@ -80,7 +83,11 @@
   <h3>Raw:</h3>
   <div id="code"><pre>{result}</pre></div>
 {:else if lastSearch != ''}
+ {#if nsfwResults != undefined && !showNsfw }
+ <h6><i>Nothing found... ({nsfwResults} NSFW)</i></h6>
+    {:else}
   <h6><i>Nothing found...</i></h6>
+  {/if}
 {/if}
 
 <style>
