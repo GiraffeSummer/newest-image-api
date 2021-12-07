@@ -13,7 +13,7 @@
     $user = usr.user != undefined ? usr.user : undefined;
   });
 
-  metatags.description = "(anime) reaction gif API and platform";
+  metatags.description = "gifmonkey gif monkey - (anime) reaction gif API and platform";
   metatags.robots = "index, follow";
 </script>
 
