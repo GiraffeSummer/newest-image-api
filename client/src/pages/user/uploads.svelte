@@ -77,6 +77,9 @@
 {#await request then userUploads}
   {#each userUploads.uploads as gif}
     <Upload {gif} on:deletegif={deleteGif} />
+    {#if userUploads.nsfwResults != undefined && !showNsfw}
+    {userUploads.nsfwResults} Nsfw uploads
+      {/if}
   {:else}
     <br />
     <b>{userUploads.uploader.username} has no uploads {(userUploads.nsfwResults) ? `${userUploads.nsfwResults} Nsfw uploads` : '' }</b>
