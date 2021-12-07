@@ -29,7 +29,7 @@ Router.get('/upload', ensureAuthenticated, ensurePerms(['upload']), (req, res) =
 
 Router.get('/user/file-uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
     const nsfw = req.query.nsfw == 'true' || false;
-    const uploads = await GetUserUploads(req.user._id, nsfw);
+    const { uploads, nsfwResults } = await GetUserUploads(req.user._id, nsfw);
     res.send({ user: { ...GetSafeUser(req.user, true), _id: req.user._id }, uploads })
 })
 
@@ -37,13 +37,15 @@ Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'acc
     let user = await db.schemas.Users.findOne({ _id: req.params.id });
     const nsfw = req.query.nsfw == 'true' || false;
 
-    const uploads = await GetUserUploads(user._id, nsfw);
-    res.send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(user), uploads })
+    const { uploads, nsfwResults } = await GetUserUploads(user._id, nsfw);
+    res.send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(user), uploads, nsfwResults })
 })
 
 async function GetUserUploads(id, nsfw = false) {
-    const query = (nsfw) ? { user: { _id: id } } : {nsfw: false, user: { _id: id }  };
-    return await db.schemas.Gifs.find(query)
+    const query = (nsfw) ? { user: { _id: id } } : { nsfw: false, user: { _id: id } };
+    const uploads = await db.schemas.Gifs.find(query)
+    const nsfwResults = (nsfw) ? undefined : await db.schemas.Gifs.count({ ...query, nsfw: true });
+    return { uploads, nsfwResults };
 }
 
 function CleanTags(tags) {

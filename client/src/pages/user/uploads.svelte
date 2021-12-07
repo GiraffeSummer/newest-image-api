@@ -79,7 +79,7 @@
     <Upload {gif} on:deletegif={deleteGif} />
   {:else}
     <br />
-    <b>{userUploads.uploader.username} has no uploads</b>
+    <b>{userUploads.uploader.username} has no uploads {(userUploads.nsfwResults) ? `${userUploads.nsfwResults} Nsfw uploads` : '' }</b>
   {/each}
 {/await}
   {/if}
