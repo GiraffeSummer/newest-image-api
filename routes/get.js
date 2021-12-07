@@ -11,10 +11,8 @@ const baseUrl = settings.get('baseUrl')
 Router.get('/find/:search', async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
-    
+
     search = search.split(',').map(x => x.trim().toLowerCase());
-    
-    let nsfwResults = undefined;
 
     const query = {
         $or: [
@@ -25,7 +23,6 @@ Router.get('/find/:search', async (req, res) => {
     }
     if (!nsfw) {
         query.nsfw = false;
-        nsfwResults = await db.schemas.Gifs.count({ ...query, nsfw: true });
     }
     const results = await db.schemas.Gifs.find(query).populate('user');
     let gifs = [];
@@ -64,7 +61,7 @@ Router.get('/find/:search', async (req, res) => {
 
 
 
-    res.send({ user: GetSafeUser(req.user, true), gifs, nsfwResults });
+    res.send({ user: GetSafeUser(req.user, true), gifs });
 });
 
 Router.get('/data/user', (req, res) => {
