@@ -18,6 +18,7 @@ TODO:
  - show query on find page
  - autofill tags on find search bar
  - maybe styling upgrades
+ - add api key infrastructure
 
 feel free to suggest or send a PR
 
