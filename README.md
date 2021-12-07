@@ -1,4 +1,4 @@
-"# newest-image-api" 
+"# Gif monkey" 
 
 WORK IN PROGRESS
 
@@ -22,7 +22,7 @@ feel free to suggest or send a PR
 
 .env template:
 ```env
-MONGODB_URI=localhost:27017/ImageApi
+MONGODB_URI=localhost:27017/gifmonkey
 COOKIEKEY=hmmmm_cookies
 NODE_ENV=dev#production
 PORT=3000
