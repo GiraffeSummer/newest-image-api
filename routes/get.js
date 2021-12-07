@@ -24,7 +24,7 @@ Router.get('/find/:search', async (req, res) => {
     }
     if (!nsfw) {
         query.nsfw = false;
-        nsfwResults = await db.schemas.Gifs.count(query);
+        nsfwResults = await db.schemas.Gifs.count({ ...query, nsfw: true });
     }
     const results = await db.schemas.Gifs.find(query).populate('user');
     let gifs = [];
