@@ -11,9 +11,10 @@ const baseUrl = settings.get('baseUrl')
 Router.get('/find/:search', async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
-
+    
     search = search.split(',').map(x => x.trim().toLowerCase());
-
+    
+    let nsfwResults = undefined;
 
     const query = {
         $or: [
