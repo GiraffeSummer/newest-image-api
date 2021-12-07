@@ -12,6 +12,7 @@ current push just is the main upload and get functionality
 TODO:
  - better scalibilty in admin, my uploads, and find pages
     like putting things on different pages, make user finder searchable (my uploads)
+ - search option in user uploads page to easily find specific gifs
  - API documentation
  - show query on find page
  - autofill tags on find search bar
