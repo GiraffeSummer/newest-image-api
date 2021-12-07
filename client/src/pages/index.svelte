@@ -3,7 +3,7 @@
   import { backend } from '../stores.js';
 
   metatags.title = 'Gif Monkey';
-  metatags.description = 'Api for (reaction) gifs';
+  metatags.description = "gifmonkey gif monkey - (anime) reaction gif API and platform";
 </script>
 
 <h1>Gif Monkey</h1>
