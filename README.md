@@ -13,6 +13,7 @@ TODO:
  - better scalibilty in admin, my uploads, and find pages
     like putting things on different pages, make user finder searchable (my uploads)
  - search option in user uploads page to easily find specific gifs
+ - search users on admin page
  - API documentation
  - show query on find page
  - autofill tags on find search bar
