@@ -83,7 +83,7 @@
   <h3>Raw:</h3>
   <div id="code"><pre>{result}</pre></div>
 {:else if lastSearch != ''}
- {#if nsfwResults != undefined && !showNsfw }
+ {#if nsfwResults != undefined }
  <h6><i>Nothing found... ({nsfwResults} NSFW)</i></h6>
     {:else}
   <h6><i>Nothing found...</i></h6>
