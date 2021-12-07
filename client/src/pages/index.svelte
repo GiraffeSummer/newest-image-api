@@ -8,11 +8,16 @@
 
 <h1>Gif Monkey</h1>
 <p>
-  Hello this is work in progress, but please try to log in upload something,
-  then see if you can find it on the /find page
+  This is a (reaction) gif API,
+  Feel free to log in and ask me (criPPLe RiCK#7355) for upload perms.
+
+  I want to mainly have anime reaction gifs, as they're more lighthearted and usually pretty fun.
+  This will also make it more coheisive
+
+
 </p>
 <p>
-  I made this mainly for myself to use for my discord bot but feel free to
-  message me to use it too for your bot or something else (if you know this
-  website you most likely know me XD)
+ If you also want to use the API, 
+ or have any suggestions,
+ feel free to also message me.
 </p>

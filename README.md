@@ -10,15 +10,12 @@ I have a cool permissions system.
 current push just is the main upload and get functionality
 
 TODO:
- - edit uploads
- - edit permissions (for admins (`manage_user`))
- - better frontend (svelte)
- - more to come
-
-
-/client is WIP svelte front end
-
-current front end is made with ejs, as I wanted it to work
+ - better scalibilty in admin, my uploads, and find pages
+    like putting things on different pages, make user finder searchable (my uploads)
+ - API documentation
+ - show query on find page
+ - autofill tags on find search bar
+ - maybe styling upgrades
 
 feel free to suggest or send a PR
 
