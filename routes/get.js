@@ -14,7 +14,7 @@ Router.get('/find/:search', async (req, res) => {
 
     search = search.split(',').map(x => x.trim().toLowerCase());
 
-    
+
     const query = {
         $or: [
             { "name": { "$regex": search.join(' '), "$options": "i" } },
@@ -22,7 +22,10 @@ Router.get('/find/:search', async (req, res) => {
             { "tags": { "$in": [...search] } },
         ]
     }
-    if(!nsfw) query.nsfw = false;
+    if (!nsfw) {
+        query.nsfw = false;
+        nsfwResults = await db.schemas.Gifs.count(query);
+    }
     const results = await db.schemas.Gifs.find(query).populate('user');
     let gifs = [];
 
@@ -60,7 +63,7 @@ Router.get('/find/:search', async (req, res) => {
 
 
 
-    res.send({ user: GetSafeUser(req.user, true), gifs });
+    res.send({ user: GetSafeUser(req.user, true), gifs, nsfwResults });
 });
 
 Router.get('/data/user', (req, res) => {
