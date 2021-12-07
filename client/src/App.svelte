@@ -1,5 +1,5 @@
 <script>
-  import { Router } from '@roxi/routify';
+  import { Router ,metatags} from '@roxi/routify';
   import { routes } from '../.routify/routes';
   import { user, backend } from './stores.js';
   import { onMount } from 'svelte';
@@ -12,6 +12,9 @@
 
     $user = usr.user != undefined ? usr.user : undefined;
   });
+
+  metatags.description = "(anime) reaction gif API and platform";
+  metatags.robots = "index, follow";
 </script>
 
 <Router {routes} />
