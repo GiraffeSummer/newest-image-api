@@ -32,18 +32,31 @@ function ensureAuthenticated(req, res, next) {
 
 function ensurePerms(perms) {
     //check if user has permission to access endpoint
-    return (req, res, next) => {
+    return async (req, res, next) => {
         if (DEVELOPMENT) { //unsafe for production, for production check in db if contains permissions
             const all_allowed = req.session.passport.user.permissions.includes('all_perms_allowed');
+            req.usingKey = false;
             if (all_allowed) return next();
         }
 
         let allowed = false;
+
+        /*let usingKey = Object.keys(req.headers).includes('key');
+        console.log(req.headers)
+        req.usingKey = usingKey;
+        if (!usingKey) {*/
         if (Array.isArray(perms)) {
             allowed = perms.every(p => req.session.passport.user.permissions.includes(p))
         } else {
             allowed = req.session.passport.user.permissions.includes(perms);
         }
+        /*
+    } else {
+        const key = req.headers.get('key');
+        console.log(key)
+        const keys = await db.schemas.Keys.find({key}).populate('user');
+        //console.log(keys)
+    }*/
         console.log('ensuring: ' + perms + ` ${allowed}`);
 
         if (allowed)

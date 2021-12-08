@@ -8,6 +8,8 @@ Router.get('/get', (req, res) => {
     res.render('get', { user: GetSafeUser(req.user) });
 })*/
 const baseUrl = settings.get('baseUrl')
+
+
 Router.get('/find/:search', async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
@@ -26,7 +28,7 @@ Router.get('/find/:search', async (req, res) => {
     }
     const results = await db.schemas.Gifs.find(query).populate('user');
     let gifs = [];
-
+    
     //make copy to unlink from schemas
     results.forEach(r => {
         //need to improve this, reference object without linking
@@ -38,6 +40,7 @@ Router.get('/find/:search', async (req, res) => {
         gifs.push(x);
     });
 
+
     //filter info based on permissions (not working//TODO)
     if (req.user != null) {
         if (!req.user.permissions.includes('access_user')) {
@@ -47,7 +50,7 @@ Router.get('/find/:search', async (req, res) => {
                 for (const key in a.user) {
                     if (allowedFields.includes(key)) {
                         tempUser[key] = a.user[key];
-                    }
+                    } module.exports = Router;
                 }
 
                 delete a.user;
@@ -57,16 +60,18 @@ Router.get('/find/:search', async (req, res) => {
         }
     }
 
-    //console.log(results);
+    let retObject = { gifs };
 
+   // if (!req.usingKey) {
+        retObject.user = GetSafeUser(req.user, true);
+    //}
 
-
-    res.send({ user: GetSafeUser(req.user, true), gifs });
+    res.send(retObject);
 });
 
 Router.get('/data/user', (req, res) => {
     res.json({ user: GetSafeUser(req.user, true) })
-})
+});
 /*
 //testing raw user data
 Router.get('/raw/user', (req, res) => {

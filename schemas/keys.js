@@ -9,7 +9,7 @@ const schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: require('./users')
     },
-    permissions: { type: Array, default: ['get'] }
+    permissions: { type: Array, default: ['download'] }
 });
 
 // Compile model from schema
