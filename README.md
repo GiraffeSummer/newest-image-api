@@ -17,8 +17,18 @@ TODO:
  - API documentation
  - show query on find page
  - autofill tags on find search bar
- - maybe styling upgrades
  - add api key infrastructure
+
+UPCOMING (maybe)
+ - list of user activities like
+   - most recent registered
+   - most uploads
+   - most nsfw  uploads ? 
+ - styling upgrades
+ - better mobile
+ - search suggestion
+ - better way to be used as a platform, and less raw API
+   - share url (or something)
 
 feel free to suggest or send a PR
 
@@ -31,4 +41,11 @@ PORT=3000
 
 DISCORD_CLIENT=
 DISCORD_SECRET=
+```
+
+don't forget `/client/.env`
+```env
+VITE_backend=http://localhost:3000
+#Production:
+#VITE_backend=""
 ```

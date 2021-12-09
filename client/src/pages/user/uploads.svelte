@@ -11,6 +11,9 @@
 
   let userData = {};
 
+  
+  let canDelete = false;
+
   metatags.title = 'Uploads';
   metatags.description = 'User uploads';
 
@@ -39,6 +42,8 @@
       credentials: 'include',
     });
     const data = await res.json();
+    canDelete = (userData.user._id == selected) ? true : userData.user.permissions.includes('delete_content');
+    console.log("candelete " + (canDelete) ? '✅' : '❌')
     return data;
   };
 
@@ -76,7 +81,7 @@
 
 {#await request then userUploads}
   {#each userUploads.uploads as gif}
-    <Upload {gif} on:deletegif={deleteGif} />
+    <Upload {gif} on:deletegif={deleteGif} {canDelete} />
     
   {:else}
     <br />

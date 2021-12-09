@@ -60,13 +60,10 @@ Router.get('/find/:search', async (req, res) => {
         }
     }
 
-    let retObject = { gifs };
+     
+//removed user from this
 
-   // if (!req.usingKey) {
-        retObject.user = GetSafeUser(req.user, true);
-    //}
-
-    res.send(retObject);
+    res.send({ gifs });
 });
 
 Router.get('/data/user', (req, res) => {

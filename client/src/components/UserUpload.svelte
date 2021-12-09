@@ -15,6 +15,8 @@
 
   export let gif;
 
+  export let canDelete = false;
+
   const updateGif = async () => {
     const _nsfw = gif.nsfw != isnsfw;
     const _name = gif.name != filename;
@@ -70,6 +72,7 @@
   };
 
   const deleteUpload = async () => {
+    if(!canDelete) return;
     const c = confirm(`Are you sure you want to delete '${gif.name}'?`);
 
     if (c) {
@@ -122,9 +125,10 @@
     <button type="submit" tabindex="-1" class="create" enabled={validUpdate}
       >Update</button
     >
+    {#if canDelete}
     <button type="button" tabindex="-1" class="delete" on:click={deleteUpload}
-      >Delete</button
-    >
+      >Delete</button>
+      {/if}
   </form>
 </div>
 
