@@ -14,6 +14,8 @@
   
   let canDelete = false;
 
+  $: console.log("candelete " + canDelete ? '✅' : '❌')
+
   metatags.title = 'Uploads';
   metatags.description = 'User uploads';
 
@@ -57,7 +59,7 @@
     }
   };
 </script>
-candelete {canDelete ? '✅' : '❌'}
+
 {#if userData != {} && Array.isArray(userData?.uploads) && users.length >= 0}
   {#if userData.user.permissions.includes('manage_user')}
     <select
