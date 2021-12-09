@@ -57,7 +57,7 @@
   };
 </script>
 candelete
-<input type=checkbox bind:checked={canDelete} />
+<input type=checkbox bind:checked={canDelete} on:click={return false} />
 {#if userData != {} && Array.isArray(userData?.uploads) && users.length >= 0}
   {#if userData.user.permissions.includes('manage_user')}
     <select
