@@ -16,6 +16,7 @@
   let canSearch = true;
   $: canSearch = lastSearch != tags;
 
+
   metatags.title = 'Find';
   metatags.description = '';
   const getData = async () => {
@@ -52,7 +53,6 @@
     if (e.key === 'Enter') cb(e);
   };
 </script>
-
 <input
   type="text"
   id="search"

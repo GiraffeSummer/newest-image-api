@@ -15,6 +15,8 @@
 
   export let gif;
 
+  export let canDelete = false;
+
   const updateGif = async () => {
     const _nsfw = gif.nsfw != isnsfw;
     const _name = gif.name != filename;

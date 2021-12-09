@@ -11,6 +11,9 @@
 
   let userData = {};
 
+  
+  let canDelete = (user._id == selected) ? true : user.permissions.includes('delete_content');
+
   metatags.title = 'Uploads';
   metatags.description = 'User uploads';
 
@@ -53,7 +56,8 @@
     }
   };
 </script>
-
+candelete
+<input type=checkbox bind:checked={canDelete} />
 {#if userData != {} && Array.isArray(userData?.uploads) && users.length >= 0}
   {#if userData.user.permissions.includes('manage_user')}
     <select
@@ -76,7 +80,7 @@
 
 {#await request then userUploads}
   {#each userUploads.uploads as gif}
-    <Upload {gif} on:deletegif={deleteGif} />
+    <Upload {gif} on:deletegif={deleteGif} {canDelete} />
     
   {:else}
     <br />
