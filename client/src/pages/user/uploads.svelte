@@ -14,8 +14,6 @@
   
   let canDelete = false;
 
-  $: console.log("candelete " + canDelete ? '✅' : '❌')
-
   metatags.title = 'Uploads';
   metatags.description = 'User uploads';
 
@@ -45,6 +43,7 @@
     });
     const data = await res.json();
     canDelete = (userData.user._id == selected) ? true : userData.user.permissions.includes('delete_content');
+    console.log("candelete " + (canDelete) ? '✅' : '❌')
     return data;
   };
 
