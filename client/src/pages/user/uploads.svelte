@@ -42,7 +42,6 @@
       credentials: 'include',
     });
     const data = await res.json();
-    console.log(userData,'selected: '+ selected)
     canDelete = (userData.user._id == selected) ? true : userData.user.permissions.includes('delete_content');
     return data;
   };
