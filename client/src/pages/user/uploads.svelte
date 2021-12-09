@@ -12,7 +12,7 @@
   let userData = {};
 
   
-  let canDelete = (user._id == selected) ? true : user.permissions.includes('delete_content');
+  let canDelete = false;
 
   metatags.title = 'Uploads';
   metatags.description = 'User uploads';
@@ -42,7 +42,7 @@
       credentials: 'include',
     });
     const data = await res.json();
-    canDelete = (user._id == selected) ? true : userData.user.permissions.includes('delete_content');
+    canDelete = (userData.user._id == selected) ? true : userData.user.permissions.includes('delete_content');
     return data;
   };
 
