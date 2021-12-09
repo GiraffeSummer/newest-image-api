@@ -64,7 +64,7 @@
 </script>
 
 {#if messageActive}
-  <div class="message toast top">{message}</div>
+  <div class="message toast top" class:active="{messageActive}">{message}</div>
 {/if}
 
 <form class="form" on:submit|preventDefault={onSubmit}>
