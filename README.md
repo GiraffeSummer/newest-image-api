@@ -18,13 +18,14 @@ TODO:
  - show query on find page
  - autofill tags on find search bar
  - add api key infrastructure
+ - better messages, toast system in _layout
+ - styling upgrades
 
 UPCOMING (maybe)
  - list of user activities like
    - most recent registered
    - most uploads
    - most nsfw  uploads ? 
- - styling upgrades
  - better mobile
  - search suggestion
  - better way to be used as a platform, and less raw API
