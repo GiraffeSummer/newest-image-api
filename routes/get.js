@@ -2,6 +2,7 @@ const express = require('express');
 const Router = express.Router();
 
 const { db, GetSafeUser, settings } = require("../index.js");
+const {ensureKey} = require("../lib/apiManager")
 module.exports = Router;
 /*
 Router.get('/get', (req, res) => {
@@ -10,7 +11,8 @@ Router.get('/get', (req, res) => {
 const baseUrl = settings.get('baseUrl')
 
 
-Router.get('/find/:search', async (req, res) => {
+
+Router.get('/find/:search', ensureKey, async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
 
@@ -28,7 +30,7 @@ Router.get('/find/:search', async (req, res) => {
     }
     const results = await db.schemas.Gifs.find(query).populate('user');
     let gifs = [];
-    
+
     //make copy to unlink from schemas
     results.forEach(r => {
         //need to improve this, reference object without linking
@@ -60,8 +62,8 @@ Router.get('/find/:search', async (req, res) => {
         }
     }
 
-     
-//removed user from this
+
+    //removed user from this
 
     res.send({ gifs });
 });

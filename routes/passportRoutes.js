@@ -23,6 +23,6 @@ Router.get('/auth/discord/callback',
         failureRedirect: redirectUrl,
     })
 );
-Router.get("/login", (req, res) => {/*
-    res.render("login", { user: GetSafeUser(req.user, true) })*/
+Router.get("/login", (req, res) => {
+    res.redirect(settings.get('frontEndUrl'));
 })

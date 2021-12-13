@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     key: String,
-    uses: Number,
+    uses: { type: Number, default: 0 },
     creationdate: { type: Date, default: Date.now() },
     holder: {
         type: mongoose.Schema.Types.ObjectId,
