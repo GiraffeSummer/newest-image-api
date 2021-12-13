@@ -123,7 +123,6 @@ app.set('trust proxy', 1);
 app.use('/gifs', express.static('./uploads'));
 app.use('/global', express.static('./global'));
 app.use(cors({
-
     /*origin: function (origin, callback) {
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
