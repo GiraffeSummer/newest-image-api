@@ -131,17 +131,17 @@ app.use(cors({
             return callback(new Error(msg), false);
         } return callback(null, true);
     },*/
-    origin: allowedOrigins,
+    origin: '*',//allowedOrigins,
     credentials: true
 }));
-
+/*
 app.use((req, res, next) => {
     // Access-Control-Allow-Origin
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
 })
-
+*/
 app.use(
     helmet({
         contentSecurityPolicy: {
