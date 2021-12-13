@@ -27,8 +27,8 @@
       {
         credentials: 'include',
         headers: {
-          Origin: `${window.location.protocol}//${window.location.host}`,
-          origin: `${window.location.protocol}//${window.location.host}`,
+          Origin: `${window.location.origin}`,
+          origin: `${window.location.origin}`,
         },
       }
     );
@@ -58,9 +58,10 @@
   const checkEnter = (e, cb) => {
     if (e.key === 'Enter') cb(e);
   };
+  let origin =window.location.origin
 </script>
 
-{window.location.origin}
+{origin}
 <input
   type="text"
   id="search"
