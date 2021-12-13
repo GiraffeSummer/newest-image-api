@@ -16,16 +16,19 @@
   let canSearch = true;
   $: canSearch = lastSearch != tags;
 
-
   metatags.title = 'Find';
   metatags.description = '';
   const getData = async () => {
     if (!canSearch) return;
 
     lastSearch = `${tags}`;
-    const res = await fetch(backend + '/find/' + tags + `${(showNsfw) ? '?nsfw=true' : ''}`, {
-      credentials: 'include',
-    });
+    const res = await fetch(
+      backend + '/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
+      {
+        credentials: 'include',
+        headers: { origin: window.location.origin },
+      }
+    );
     const json = await res.json();
     let gifs = json.gifs.map((a) => {
       delete a._id;
@@ -53,6 +56,7 @@
     if (e.key === 'Enter') cb(e);
   };
 </script>
+
 <input
   type="text"
   id="search"
@@ -61,11 +65,16 @@
   on:keydown={(e) => {
     checkEnter(e, getData);
   }}
-/> 
- <label for="showNsfw">
-  <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={()=>canSearch = true}/>
- Show Nsfw?
-  </label>  
+/>
+<label for="showNsfw">
+  <input
+    id="showNsfw"
+    type="checkbox"
+    bind:checked={showNsfw}
+    on:change={() => (canSearch = true)}
+  />
+  Show Nsfw?
+</label>
 <button on:click={getData} id="searchBtn">Search</button>
 <br /><br />
 {#if gifImages.length > 0}
