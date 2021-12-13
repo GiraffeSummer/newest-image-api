@@ -28,8 +28,7 @@
         credentials: 'include',
         origin: window.location.origin,
         headers: {
-          Origin: `${window.location.origin}`,
-          origin: `${window.location.origin}`,
+          Origin: `${window.location.origin || 'test'}`,
         },
       }
     );
