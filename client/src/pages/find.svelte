@@ -26,7 +26,7 @@
       backend + '/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
-        headers: { origin: window.location.origin },
+        headers: { 'Origin': window.location.origin },
       }
     );
     const json = await res.json();
