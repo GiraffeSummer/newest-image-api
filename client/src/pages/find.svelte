@@ -26,7 +26,10 @@
       backend + '/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
-        headers: { 'Origin': window.location.origin },
+        headers: {
+          Origin: `${window.location.protocol}//${window.location.host}`,
+          origin: `${window.location.protocol}//${window.location.host}`,
+        },
       }
     );
     const json = await res.json();
@@ -57,6 +60,7 @@
   };
 </script>
 
+{window.location.origin}
 <input
   type="text"
   id="search"
