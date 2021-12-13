@@ -123,6 +123,16 @@ app.set('trust proxy', 1);
 app.use('/gifs', express.static('./uploads'));
 app.use('/global', express.static('./global'));
 app.use(cors({
+    origin: function (origin, callback) {
+        if (allowedOrigins.includes(origin) ) {
+            console.log(origin);
+            callback(null, true)
+        } else {
+            if (config.secure) {
+                callback(new Error('Not allowed by CORS'));
+            }
+        }
+    },
     /*origin: function (origin, callback) {
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
@@ -131,7 +141,7 @@ app.use(cors({
             return callback(new Error(msg), false);
         } return callback(null, true);
     },*/
-    origin: '*',//allowedOrigins,
+   // origin: '*',//allowedOrigins,
     credentials: true
 }));
 /*
