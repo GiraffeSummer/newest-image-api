@@ -21,52 +21,6 @@ const allowedOrigins = [BaseDomain, "https://google.com", "https://cdn.discordap
 
 const db = require("./lib/db")();
 
-function ensureAuthenticated(req, res, next) {
-    const Authorized = req.isAuthenticated();
-    if (Authorized) {
-        return next();
-    } else {
-        res.redirect("/login")
-    }
-}
-
-function ensurePerms(perms) {
-    //check if user has permission to access endpoint
-    return async (req, res, next) => {
-        if (DEVELOPMENT) { //unsafe for production, for production check in db if contains permissions
-            const all_allowed = req.session.passport.user.permissions.includes('all_perms_allowed');
-            req.usingKey = false;
-            if (all_allowed) return next();
-        }
-
-        let allowed = false;
-
-        /*let usingKey = Object.keys(req.headers).includes('key');
-        console.log(req.headers)
-        req.usingKey = usingKey;
-        if (!usingKey) {*/
-        if (Array.isArray(perms)) {
-            allowed = perms.every(p => req.session.passport.user.permissions.includes(p))
-        } else {
-            allowed = req.session.passport.user.permissions.includes(perms);
-        }
-        /*
-    } else {
-        const key = req.headers.get('key');
-        console.log(key)
-        const keys = await db.schemas.Keys.find({key}).populate('user');
-        //console.log(keys)
-    }*/
-        console.log('ensuring: ' + perms + ` ${allowed}`);
-
-        if (allowed)
-            return next();
-        else {//reject
-            return res.status(403).redirect("/login")//next();
-        }
-    }
-}
-
 passport.serializeUser((user, done) => {
     done(null, user);
 });
@@ -108,8 +62,6 @@ function GetDataUser(user, items = ['username', 'userid']) {
 
 module.exports = {
     APPNAME,
-    ensureAuthenticated,
-    ensurePerms,
     passport,
     db,
     PORT,

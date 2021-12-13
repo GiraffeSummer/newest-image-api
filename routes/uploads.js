@@ -8,7 +8,8 @@ const { log } = require('../lib/logger');
 const filters = require('../lib/fileFilters');
 const maxTags = 20;//10
 
-const { ensureAuthenticated, passport, db, ensurePerms, GetSafeUser } = require("../index.js");
+const { passport, db, GetSafeUser } = require("../index.js");
+const { ensurePerms, ensureAuthenticated } = require("../lib/apiManager")
 
 module.exports = Router;
 
@@ -23,17 +24,17 @@ const gifUpload = multer({
     }
 }).single('gif');
 /*
-Router.get('/upload', ensureAuthenticated, ensurePerms(['upload']), (req, res) => {
+Router.get('/upload',  ensurePerms(['upload']), (req, res) => {
     res.render('upload', { user: GetSafeUser(req.user, true) });
 });*/
 
-Router.get('/user/file-uploads', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
+Router.get('/user/file-uploads', ensurePerms(['upload']), async (req, res) => {
     const nsfw = req.query.nsfw == 'true' || false;
     const { uploads, nsfwResults } = await GetUserUploads(req.user._id, nsfw);
     res.send({ user: { ...GetSafeUser(req.user, true), _id: req.user._id }, uploads })
 })
 
-Router.get('/user/uploads/:id', ensureAuthenticated, ensurePerms(['upload', 'access_user']), async (req, res) => {
+Router.get('/user/uploads/:id', ensurePerms(['upload', 'access_user']), async (req, res) => {
     let user = await db.schemas.Users.findOne({ _id: req.params.id });
     const nsfw = req.query.nsfw == 'true' || false;
 
@@ -56,7 +57,7 @@ function CleanTags(tags) {
     //haha stupid long line
 }
 
-Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
+Router.post('/update-upload/:id', ensurePerms(['upload']), async (req, res) => {
     const { id: _id } = req.params;
     const { changes, new: newData } = req.body;
     const update = {};
@@ -74,7 +75,7 @@ Router.post('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), 
     res.send({ status: 'ok', result })
 })
 
-Router.delete('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload']), async (req, res) => {
+Router.delete('/update-upload/:id', ensurePerms(['upload']), async (req, res) => {
     const { id: _id } = req.params;
     const confirmed = req.body.confirm;
 
@@ -91,7 +92,7 @@ Router.delete('/update-upload/:id', ensureAuthenticated, ensurePerms(['upload'])
     res.send({ status: 'ok', result })
 })
 
-Router.post('/upload', ensureAuthenticated, ensurePerms(['upload']), gifUpload, async (req, res) => {
+Router.post('/upload', ensurePerms(['upload']), gifUpload, async (req, res) => {
     const file = req.file;
 
     if (file === undefined) {

@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const { log } = require('../lib/logger');
 const Permissions = require('../lib/permissions');
 
-const { ensureAuthenticated, passport, db, ensurePerms, GetSafeUser, settings } = require("../index.js");
+const { passport, db, GetSafeUser, settings } = require("../index.js");
+const { ensurePerms, ensureAuthenticated } = require("../lib/apiManager")
 
 const { CleanObject, HighestPermission, PermissionKeys } = require("../lib/functions.js");
 
@@ -13,7 +14,7 @@ const perms = CleanObject(Permissions, ['member', 'none', 'download', 'all_perms
 
 module.exports = Router;
 
-Router.get('/user/all/content', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
+Router.get('/user/all/content', ensurePerms(['manage_user']), async (req, res) => {
     const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
     let users = JSON.parse(JSON.stringify(await db.schemas.Users.find({})))
 
@@ -28,7 +29,7 @@ Router.get('/user/all/content', ensureAuthenticated, ensurePerms(['manage_user']
     res.send({ user: GetSafeUser(req.user, true), users })
 })
 
-Router.get('/user/all', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
+Router.get('/user/all', ensurePerms(['manage_user']), async (req, res) => {
     const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
     const fullPerms = currentUser.permissions.includes('read_users');
     let users = JSON.parse(JSON.stringify(await db.schemas.Users.find({})))
@@ -45,7 +46,7 @@ Router.get('/user/all', ensureAuthenticated, ensurePerms(['manage_user']), async
     res.send({ user: GetSafeUser(req.user, true), PermissionKeys, permissions: perms, users })
 })
 
-Router.post('/user/:id', ensureAuthenticated, ensurePerms(['manage_user']), async (req, res) => {
+Router.post('/user/:id', ensurePerms(['manage_user']), async (req, res) => {
     const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
     const user = await db.schemas.Users.findOne({ _id: req.params.id });
     if (currentUser == null || user == null || HighestPermission(currentUser).index < HighestPermission(user).index) return res.send({ status: 'failed' })

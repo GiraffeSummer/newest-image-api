@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 
-const { ensureAuthenticated, passport, GetSafeUser, settings } = require("../index.js");
+const { passport, GetSafeUser, settings } = require("../index.js");
 module.exports = Router;
 const redirectUrl = settings.get('frontEndUrl');
 
