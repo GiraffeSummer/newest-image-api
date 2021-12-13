@@ -26,6 +26,7 @@
       backend + '/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
+        origin: window.location.origin,
         headers: {
           Origin: `${window.location.origin}`,
           origin: `${window.location.origin}`,
@@ -58,10 +59,8 @@
   const checkEnter = (e, cb) => {
     if (e.key === 'Enter') cb(e);
   };
-  let origin =window.location.origin
 </script>
 
-{origin}
 <input
   type="text"
   id="search"
