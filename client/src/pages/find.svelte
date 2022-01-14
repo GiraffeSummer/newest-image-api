@@ -54,7 +54,6 @@
   $: tags,fullSearch();
 
     const fullSearch = async () => {
-      console.log('search',showNsfw,tags)
     const res = await fetch(
       backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
@@ -62,7 +61,6 @@
       }
     );
     const json = await res.json();
-    console.log(json)
     let gifs = json.gifs.map((a) => {
       delete a._id;
       delete a.__v;

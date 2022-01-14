@@ -10,8 +10,9 @@ Router.get('/get', (req, res) => {
 })*/
 const baseUrl = settings.get('baseUrl')
 
-Router.get('/find/query/:search', ensureKey, async (req, res) => {
 
+//fulltext (needs work probably - maybe just get titles/names for autocomplete)
+Router.get('/find/query/:search', ensureKey, async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
 
@@ -28,7 +29,6 @@ Router.get('/find/query/:search', ensureKey, async (req, res) => {
         query.nsfw = false;
     }
     const results = await db.schemas.Gifs.find(query).limit(20).populate('user');
-    console.log(search,results)
     let gifs = [];
 
     //make copy to unlink from schemas
