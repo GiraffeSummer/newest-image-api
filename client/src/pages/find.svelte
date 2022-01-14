@@ -51,15 +51,16 @@
     result = JSON.stringify(gifs, null, 2);
   };
 
-    const fullSearch = async () => {
-      console.log('search',showNsfw,tags)
+    const fullSearch = async (search) => {
+      console.log('search',showNsfw,search)
     const res = await fetch(
-      backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
+      backend + '/find/query/' + search + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
       }
     );
     const json = await res.json();
+    console.log(json)
     let gifs = json.gifs.map((a) => {
       delete a._id;
       delete a.__v;
@@ -83,7 +84,7 @@
   placeholder="Search..."
   bind:value={tags}
   on:keydown={(e) => {
-    fullSearch()
+    fullSearch(tags)
     checkEnter(e, getData);
   }}
 />
