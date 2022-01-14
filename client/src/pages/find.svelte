@@ -52,7 +52,7 @@
   };
 
     const fullSearch = async () => {
-      console.log('search')
+      console.log('search',showNsfw,tags)
     const res = await fetch(
       backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
@@ -83,9 +83,9 @@
   placeholder="Search..."
   bind:value={tags}
   on:keydown={(e) => {
+    fullSearch()
     checkEnter(e, getData);
   }}
-  on:change={() =>{fullSearch()}}
 />
 <label for="showNsfw">
   <input
