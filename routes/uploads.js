@@ -92,6 +92,7 @@ Router.delete('/update-upload/:id', ensurePerms(['upload']), async (req, res) =>
     res.send({ status: 'ok', result })
 })
 
+//requires {name,file,nsfw,tags}
 Router.post('/upload', ensurePerms(['upload']), gifUpload, async (req, res) => {
     const file = req.file;
 
