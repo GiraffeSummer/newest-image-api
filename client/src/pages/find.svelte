@@ -51,10 +51,12 @@
     result = JSON.stringify(gifs, null, 2);
   };
 
-    const fullSearch = async (search) => {
-      console.log('search',showNsfw,search)
+  $: tags,fullSearch();
+
+    const fullSearch = async () => {
+      console.log('search',showNsfw,tags)
     const res = await fetch(
-      backend + '/find/query/' + search + `${showNsfw ? '?nsfw=true' : ''}`,
+      backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
       }
@@ -84,7 +86,6 @@
   placeholder="Search..."
   bind:value={tags}
   on:keydown={(e) => {
-    fullSearch(tags)
     checkEnter(e, getData);
   }}
 />

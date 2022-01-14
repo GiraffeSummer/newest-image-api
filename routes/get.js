@@ -15,13 +15,19 @@ Router.get('/find/query/:search', ensureKey, async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
 
-    //search = search.split(',').map(x => x.trim().toLowerCase());
+    search = search.split(',').map(x => x.trim().toLowerCase());
 
-    const query = { $text: { $search: search } };
+    const query = {
+        $or: [
+            { "name": { "$regex": search.join(' '), "$options": "i" } },
+            { "originalname": { "$regex": search.join(' '), "$options": "i" } },
+            { "tags": { "$in": [...search] } },
+        ]
+    }
     if (!nsfw) {
         query.nsfw = false;
     }
-    const results = await db.schemas.Gifs.find(query).limit(10).populate('user');
+    const results = await db.schemas.Gifs.find(query).limit(20).populate('user');
     console.log(search,results)
     let gifs = [];
 
