@@ -51,6 +51,29 @@
     result = JSON.stringify(gifs, null, 2);
   };
 
+    const fullSearch = async () => {
+    if (!canSearch) return;
+
+    lastSearch = `${tags}`;
+    const res = await fetch(
+      backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
+      {
+        credentials: 'include',
+      }
+    );
+    const json = await res.json();
+    let gifs = json.gifs.map((a) => {
+      delete a._id;
+      delete a.__v;
+      return a;
+    });
+
+    gifImages = gifs.map((gif) => {
+      return { name: gif.name, alt: gif.originalname, src: gif.url };
+    });
+    result = JSON.stringify(gifs, null, 2);
+  };
+
   const checkEnter = (e, cb) => {
     if (e.key === 'Enter') cb(e);
   };
@@ -64,6 +87,7 @@
   on:keydown={(e) => {
     checkEnter(e, getData);
   }}
+  on:change={fullSearch()}
 />
 <label for="showNsfw">
   <input
