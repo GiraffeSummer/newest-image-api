@@ -22,6 +22,7 @@ Router.get('/find/query/:search', ensureKey, async (req, res) => {
         query.nsfw = false;
     }
     const results = await db.schemas.Gifs.find(query).limit(10).populate('user');
+    console.log(search,results)
     let gifs = [];
 
     //make copy to unlink from schemas

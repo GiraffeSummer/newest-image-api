@@ -16,7 +16,7 @@ const schema = new Schema({
     date: { type: Date, default: Date.now() },
 });
 
-schema.index({ name: 'text', filename: 'text', tags: 'text' });
+schema.index({ 'name': 'text', 'tags': 'text' });
 
 //{name, path, filename, size,date,user }
 // Compile model from schema
