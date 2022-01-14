@@ -52,9 +52,7 @@
   };
 
     const fullSearch = async () => {
-    if (!canSearch) return;
-
-    lastSearch = `${tags}`;
+      console.log('search')
     const res = await fetch(
       backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
