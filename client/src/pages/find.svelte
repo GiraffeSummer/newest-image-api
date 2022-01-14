@@ -87,7 +87,7 @@
   on:keydown={(e) => {
     checkEnter(e, getData);
   }}
-  on:change={fullSearch()}
+  on:change={() =>{fullSearch()}}
 />
 <label for="showNsfw">
   <input
