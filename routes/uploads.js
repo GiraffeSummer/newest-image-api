@@ -120,8 +120,9 @@ Router.post('/upload', ensurePerms(['upload']), gifUpload, async (req, res) => {
     //req.flash(req.origin)
 });
 
-Router.post('/upload/key', ensureKey, gifUpload, async (req, res) => {
-    const file = req.file;
+Router.post('/upload/key', async (req, res) => {
+    console.log(req.body)
+    const file = req.body.file;
 
     if (file === undefined) {
         //req.flash({status: 'failed'})
