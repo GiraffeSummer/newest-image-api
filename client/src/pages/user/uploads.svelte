@@ -11,7 +11,6 @@
 
   let userData = {};
 
-  
   let canDelete = false;
 
   metatags.title = 'Uploads';
@@ -19,9 +18,12 @@
 
   onMount(async () => {
     //no not need to get user uploads anymore
-    const res = await fetch(backend + '/user/file-uploads' + `${(showNsfw) ? '?nsfw=true' : ''}` , {
-      credentials: 'include',
-    });
+    const res = await fetch(
+      backend + '/user/file-uploads' + `${showNsfw ? '?nsfw=true' : ''}`,
+      {
+        credentials: 'include',
+      }
+    );
     let data = await res.json();
     userData = data;
     selected = userData.user._id;
@@ -38,12 +40,18 @@
   let request = undefined;
   //+ `${(showNsfw) ? '?nsfw=true' : ''}`
   const GetUserUploads = async () => {
-    const res = await fetch(backend + '/user/uploads/' + selected + `${(showNsfw) ? '?nsfw=true' : ''}`, {
-      credentials: 'include',
-    });
+    const res = await fetch(
+      backend + '/user/uploads/' + selected + `${showNsfw ? '?nsfw=true' : ''}`,
+      {
+        credentials: 'include',
+      }
+    );
     const data = await res.json();
-    canDelete = (userData.user._id == selected) ? true : userData.user.permissions.includes('delete_content');
-    console.log("candelete " + (canDelete) ? '✅' : '❌')
+    canDelete =
+      userData.user._id == selected
+        ? true
+        : userData.user.permissions.includes('delete_content');
+    console.log('candelete ' + canDelete ? '✅' : '❌');
     return data;
   };
 
@@ -63,7 +71,8 @@
   {#if userData.user.permissions.includes('manage_user')}
     <select
       bind:value={selected}
-      on:change={() => request = GetUserUploads()} >
+      on:change={() => (request = GetUserUploads())}
+    >
       {#each users as user}
         <option value={user._id}>
           {user.username}
@@ -74,21 +83,40 @@
     <h3>{userData.user.username}'s uploads</h3>
   {/if}
   <label for="showNsfw">
-    <input id="showNsfw" type=checkbox bind:checked={showNsfw} on:change={() => request = GetUserUploads() } />
-    Show Nsfw?      
-  </label >
-  
+    <input
+      id="showNsfw"
+      type="checkbox"
+      bind:checked={showNsfw}
+      on:change={() => (request = GetUserUploads())}
+    />
+    Show Nsfw?
+  </label>
 
-{#await request then userUploads}
-  {#each userUploads.uploads as gif}
-    <Upload {gif} on:deletegif={deleteGif} {canDelete} />
-    
-  {:else}
-    <br />
-    <b>{userUploads.uploader.username} has no uploads {(userUploads.nsfwResults) ? `${userUploads.nsfwResults} Nsfw uploads` : '' }</b>
-  {/each}
-  {#if userUploads.nsfwResults != undefined && !showNsfw && userUploads.uploads.length >= 1 }
-    {userUploads.nsfwResults} more Nsfw uploads
-      {/if}
-{/await}
-  {/if}
+  {#await request then userUploads}
+    <div class="gallery">
+      {#each userUploads.uploads as gif}
+        <Upload {gif} on:deletegif={deleteGif} {canDelete} />
+      {:else}
+        <br />
+        <b
+          >{userUploads.uploader.username} has no uploads {userUploads.nsfwResults
+            ? `${userUploads.nsfwResults} Nsfw uploads`
+            : ''}</b
+        >
+      {/each}
+    </div>
+    {#if userUploads.nsfwResults != undefined && !showNsfw && userUploads.uploads.length >= 1}
+      {userUploads.nsfwResults} more Nsfw uploads
+    {/if}
+  {/await}
+{/if}
+
+<style>
+  .gallery {
+    display: grid;
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    max-width: auto;
+  }
+</style>

@@ -72,7 +72,7 @@
   };
 
   const deleteUpload = async () => {
-    if(!canDelete) return;
+    if (!canDelete) return;
     const c = confirm(`Are you sure you want to delete '${gif.name}'?`);
 
     if (c) {
@@ -102,7 +102,7 @@
 </script>
 
 {#if messageActive}
-  <div class="message toast top" class:active="{messageActive}">{message}</div>
+  <div class="message toast top" class:active={messageActive}>{message}</div>
 {/if}
 
 <div class="card">
@@ -126,9 +126,10 @@
       >Update</button
     >
     {#if canDelete}
-    <button type="button" tabindex="-1" class="delete" on:click={deleteUpload}
-      >Delete</button>
-      {/if}
+      <button type="button" tabindex="-1" class="delete" on:click={deleteUpload}
+        >Delete</button
+      >
+    {/if}
   </form>
 </div>
 
@@ -138,6 +139,10 @@
     border-radius: 10px;
     padding: 15px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  input[type='text'] {
+    max-width: 100%;
   }
 
   img {

@@ -51,9 +51,9 @@
     result = JSON.stringify(gifs, null, 2);
   };
 
-  $: tags,fullSearch();
+  $: tags, fullSearch();
 
-    const fullSearch = async () => {
+  const fullSearch = async () => {
     const res = await fetch(
       backend + '/find/query/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
@@ -99,13 +99,15 @@
 <button on:click={getData} id="searchBtn">Search</button>
 <br /><br />
 {#if gifImages.length > 0}
-  {#each gifImages as gif}
-    <Card src={gif.src} alt={gif.alt}>
-      <div slot="header">
-        {gif.name}
-      </div>
-    </Card>
-  {/each}
+  <div class="gallery">
+    {#each gifImages as gif}
+      <Card src={gif.src} alt={gif.alt}>
+        <div slot="header">
+          {gif.name}
+        </div>
+      </Card>
+    {/each}
+  </div>
   <br />
   <h3>Raw:</h3>
   <div id="code"><pre>{result}</pre></div>
@@ -117,5 +119,14 @@
   pre {
     color: var(--ui-color);
     font-weight: 500;
+  }
+
+  .gallery {
+    /* Need better grid settings but this will be fine*/
+    display: grid;
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    max-width: auto;
   }
 </style>

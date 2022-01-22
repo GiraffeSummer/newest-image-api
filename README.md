@@ -1,4 +1,4 @@
-"# Gif monkey" 
+# Gif monkey
 
 WORK IN PROGRESS
 
@@ -8,6 +8,8 @@ it allows custom uploads from users, you can login with discord.
 I have a cool permissions system.
 
 current push just is the main upload and get functionality
+
+Use https://sveltematerialui.com/ for new styling
 
 TODO:
  - better scalibilty in admin, my uploads, and find pages
