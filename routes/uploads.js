@@ -119,31 +119,3 @@ Router.post('/upload', ensurePerms(['upload']), gifUpload, async (req, res) => {
     res.send({ status: "ok" })
     //req.flash(req.origin)
 });
-
-Router.post('/upload/key', async (req, res) => {
-    console.log(req.body)
-    const file = req.body.file;
-
-    if (file === undefined) {
-        //req.flash({status: 'failed'})
-        return res.send({ status: 'failed' })/*res.render('upload', { status: "failed", file, user: GetSafeUser(req.user, true) })*/
-    }
-
-    const result = await db.schemas.Gifs.create({
-        name: req.body.name,
-        originalname: file.originalname,
-        filename: file.filename,
-        path: '/gifs/' + file.filename,
-        size: file.size,
-        nsfw: req.body.nsfw == 'on',
-        user: new mongoose.Types.ObjectId(req.user._id),
-        tags: CleanTags(req.body.tags)
-    })
-
-    log('upload:success', req.user._id, { body: req.body, file, result });
-
-    //do this through client side:
-    //res.render('upload', { status: "ok", file, user: GetSafeUser(req.user, true) })
-    res.send({ status: "ok" })
-    //req.flash(req.origin)
-});
