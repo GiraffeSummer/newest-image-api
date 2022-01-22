@@ -9,7 +9,7 @@ const filters = require('../lib/fileFilters');
 const maxTags = 20;//10
 
 const { passport, db, GetSafeUser } = require("../index.js");
-const { ensurePerms, ensureAuthenticated } = require("../lib/apiManager")
+const { ensurePerms, ensureAuthenticated, ensureKey } = require("../lib/apiManager")
 
 module.exports = Router;
 
