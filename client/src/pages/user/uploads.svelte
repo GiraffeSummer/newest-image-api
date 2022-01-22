@@ -93,18 +93,20 @@
   </label>
 
   {#await request then userUploads}
-    <div class="gallery">
-      {#each userUploads.uploads as gif}
-        <Upload {gif} on:deletegif={deleteGif} {canDelete} />
-      {:else}
-        <br />
-        <b
-          >{userUploads.uploader.username} has no uploads {userUploads.nsfwResults
-            ? `${userUploads.nsfwResults} Nsfw uploads`
-            : ''}</b
-        >
-      {/each}
-    </div>
+    {#if userUploads.uploads.length > 0}
+      <div class="gallery">
+        {#each userUploads.uploads as gif}
+          <Upload {gif} on:deletegif={deleteGif} {canDelete} />
+        {/each}
+      </div>
+    {:else}
+      <br />
+      <b
+        >{userUploads.uploader.username} has no uploads {userUploads.nsfwResults
+          ? `${userUploads.nsfwResults} Nsfw uploads`
+          : ''}</b
+      >
+    {/if}
     {#if userUploads.nsfwResults != undefined && !showNsfw && userUploads.uploads.length >= 1}
       {userUploads.nsfwResults} more Nsfw uploads
     {/if}
