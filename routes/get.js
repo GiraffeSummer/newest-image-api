@@ -4,10 +4,8 @@ const Router = express.Router();
 const { db, GetSafeUser, settings } = require("../index.js");
 const { ensureKey } = require("../lib/apiManager")
 module.exports = Router;
-/*
-Router.get('/get', (req, res) => {
-    res.render('get', { user: GetSafeUser(req.user) });
-})*/
+
+
 const baseUrl = settings.get('baseUrl')
 
 
