@@ -1,26 +1,55 @@
 <script>
   import { isActive, url } from '@roxi/routify';
-
   import { user, backend } from '../stores.js';
+
+  const HasPermissions = (perm) => $user?.permissions?.includes(perm) == true;
+  const isLoggedIn = () => !($user == undefined || $user == null);
+
+  const navitems = [
+    { label: 'Home', href: '/' },
+    { label: 'Find', href: '/find' },
+    {
+      label: 'Upload',
+      href: '/upload',
+      enabled: HasPermissions('upload'),
+    },
+    {
+      label: 'My uploads',
+      href: '/user/uploads',
+      enabled: HasPermissions('upload'),
+    },
+    {
+      label: 'Admin',
+      href: '/user/admin',
+      enabled: HasPermissions('manage_user'),
+    },
+    {
+      label: 'Me',
+      href: '/user/me',
+      enabled: isLoggedIn(),
+    },
+    {
+      label: 'Login',
+      href: backend + '/auth/discord',
+      enabled: !isLoggedIn(),
+    },
+    {
+      label: 'Logout',
+      href: backend + '/auth/logout',
+      enabled: isLoggedIn(),
+    },
+  ];
 </script>
 
 <ul id="navbar">
   <li><img src={'/favicon.png'} alt="" /></li>
-  <li><a href="/">Home</a></li>
-  <li><a href="/find">Find</a></li>
-  {#if $user?.permissions?.includes('upload')}
-    <li><a href="/upload">Upload</a></li>
-    <li><a href="/user/uploads">My uploads</a></li>
-  {/if}
-  {#if $user?.permissions?.includes('manage_user')}
-    <li><a href="/user/admin">Admin</a></li>
-  {/if}
-  {#if $user == undefined || $user == null}
-    <li><a target="_self" href={backend + '/auth/discord'}>Login</a></li>
-  {:else}
-    <li><a href="/user/me">Me</a></li>
-    <li><a target="_self" href={backend + '/auth/logout'}>Logout</a></li>
-  {/if}
+  {#each navitems as nav}
+    {#if nav.enabled == undefined || nav.enabled == true}
+      <li>
+        <a href={nav.href}>{nav.label}</a>
+      </li>
+    {/if}
+  {/each}
 </ul>
 
 <style>
