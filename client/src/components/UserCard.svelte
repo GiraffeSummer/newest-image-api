@@ -79,9 +79,6 @@
     margin: 0;
     padding: 0;
   }
-  ul {
-    background-color: var(--code-background);
-  }
 
   img {
     width: 128px;
