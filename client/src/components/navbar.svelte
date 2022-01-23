@@ -45,7 +45,7 @@
   <li><img src={'/favicon.png'} alt="" /></li>
   {#each navitems as nav}
     {#if nav.enabled == undefined || nav.enabled == true}
-      <li>
+      <li class:active={$isActive('.' + nav.href)}>
         <a href={nav.href}>{nav.label}</a>
       </li>
     {/if}
@@ -55,5 +55,9 @@
 <style>
   a {
     color: var(--white);
+  }
+
+  .active{
+    background-color: var(--main-color);
   }
 </style>
