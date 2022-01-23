@@ -28,7 +28,7 @@
       href: '/user/me',
       enabled: isLoggedIn(),
     },
-    {
+  /*  {
       label: 'Login',
       href: backend + '/auth/discord',
       enabled: !isLoggedIn(),
@@ -37,7 +37,7 @@
       label: 'Logout',
       href: backend + '/auth/logout',
       enabled: isLoggedIn(),
-    },
+    },*/
   ];
 </script>
 
@@ -52,6 +52,15 @@
       </li>
     {/if}
   {/each}
+{#if isLoggedIn()}
+  <li>
+        <a target="_self" class="button" href="{backend + '/auth/logout'}">Logout</a>
+      </li>
+      {:else}
+      <li>
+         <a target="_self" class="button" href="{backend + '/auth/discord'}">Login</a>
+      </li>
+      {/if}
 </header>
 
 <style>
