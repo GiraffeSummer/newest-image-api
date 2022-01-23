@@ -117,7 +117,7 @@ textarea {
 
 input[type="text"],
 select {
-    color: var(--ui-color);
+   /* color: var(--ui-color);*/
     width: 40vw;
 }
 

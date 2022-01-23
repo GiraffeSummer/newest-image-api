@@ -105,8 +105,8 @@
   <div class="message toast top" class:active={messageActive}>{message}</div>
 {/if}
 
-<div class="card">
-  <form class="form" on:submit|preventDefault={updateGif}>
+<div class="card col-lg">
+  <form class="input-group" on:submit|preventDefault={updateGif}>
     <label for="name">Name: </label>
     <input
       class="input"
@@ -122,12 +122,15 @@
     <label for="tags">tags: (split with ,) (min {minTags} max {maxTags})</label>
     <input type="text" id="tags" name="tags" bind:value={tags} />
     <br />
-    <button type="submit" tabindex="-1" class="create" enabled={validUpdate}
+    <button class="tertiary" type="submit" tabindex="-1" enabled={validUpdate}
       >Update</button
     >
     {#if canDelete}
-      <button type="button" tabindex="-1" class="delete" on:click={deleteUpload}
-        >Delete</button
+      <button
+        type="button"
+        tabindex="-1"
+        class="secondary"
+        on:click={deleteUpload}>Delete</button
       >
     {/if}
   </form>
@@ -135,26 +138,24 @@
 
 <style>
   .card {
-    border: 1px solid #aaa;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 0;
+    margin: 0;
+    border: none;
+    max-width: 400px;
+    min-width: 30%;
   }
 
+  .input-group {
+    border-radius: 5px;
+    padding: 10px 15px;
+  }
   input[type='text'] {
     max-width: 100%;
   }
 
   img {
-    width: 250px;
+    /*
+    width: 250px;max-width: 500px;*/
     object-fit: contain;
-  }
-  form {
-    border: none;
-  }
-
-  .delete {
-    background-color: firebrick;
-    color: var(--white);
   }
 </style>

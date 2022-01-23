@@ -41,23 +41,33 @@
   ];
 </script>
 
-<ul id="navbar">
-  <li><img src={'/favicon.png'} alt="" /></li>
+<header>
+  <li>
+    <img src={'/favicon.png'} alt="" />
+  </li>
   {#each navitems as nav}
     {#if nav.enabled == undefined || nav.enabled == true}
       <li class:active={$isActive('.' + nav.href)}>
-        <a href={nav.href}>{nav.label}</a>
+        <a class="button" href={nav.href}>{nav.label}</a>
       </li>
     {/if}
   {/each}
-</ul>
+</header>
 
 <style>
+  li {
+    list-style: none;
+  }
+  img {
+    margin: 0;
+    width: 40px;
+    padding-left: 5px;
+  }
   a {
     color: var(--white);
   }
 
-  .active{
-    background-color: var(--main-color);
+  .active {
+    color: var(--main-color);
   }
 </style>

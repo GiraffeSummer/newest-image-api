@@ -67,7 +67,7 @@
   <div class="message toast top" class:active="{messageActive}">{message}</div>
 {/if}
 
-<form class="form" on:submit|preventDefault={onSubmit}>
+<form class="form input-group" on:submit|preventDefault={onSubmit}>
   <label for="name">Name: </label>
   <input
     class="input"
@@ -92,15 +92,5 @@
   <input type="text" id="tags" name="tags" bind:value={tags} />
   {tagAmount}
   <br />
-  <button type="submit" tabindex="-1" class="create">Upload</button>
+  <button type="submit" tabindex="-1" class="tertiary">Upload</button>
 </form>
-
-<style>
-  form {
-    color: var(--white);
-    background-color: var(--background-color);
-    width: 50vw;
-    border-radius: 8px;
-    border:none;
-  }
-</style>

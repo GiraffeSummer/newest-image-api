@@ -99,7 +99,7 @@
 <button on:click={getData} id="searchBtn">Search</button>
 <br /><br />
 {#if gifImages.length > 0}
-  <div class="gallery">
+  <div class="row">
     {#each gifImages as gif}
       <Card src={gif.src} alt={gif.alt}>
         <div slot="header">
@@ -114,19 +114,3 @@
 {:else if lastSearch != ''}
   <h6><i>Nothing found...</i></h6>
 {/if}
-
-<style>
-  pre {
-    color: var(--ui-color);
-    font-weight: 500;
-  }
-
-  .gallery {
-    /* Need better grid settings but this will be fine*/
-    display: grid;
-    grid-column-gap: 40px;
-    grid-row-gap: 40px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    max-width: auto;
-  }
-</style>

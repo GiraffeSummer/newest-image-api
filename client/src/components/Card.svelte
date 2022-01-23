@@ -3,11 +3,11 @@
   export let alt = '';
 </script>
 
-<div class="card">
+<div class="card col-lg">
   <h2>
     <slot name="header">Unknown header</slot>
   </h2>
-  <div><img {alt} {src} /></div>
+  <div><img {alt} {src} class="section media"/></div>
   <div class="footer">
     <slot name="footer" />
   </div>

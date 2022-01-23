@@ -17,7 +17,9 @@
 </script>
 
 {#if users.length > 0}
-  {#each users as user}
-    <UserCard {user} {permissions} />
-  {/each}
+  <div class="row">
+    {#each users as user}
+      <UserCard {user} {permissions} />
+    {/each}
+  </div>
 {/if}

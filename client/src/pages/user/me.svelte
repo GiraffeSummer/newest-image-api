@@ -1,6 +1,8 @@
 <script>
   import { backend, user } from '../../stores.js';
   import ClipboardCopy from '../../components/ClipboardCopy.svelte';
+
+  import ChipManager from '../../../WIP/chipManager.svelte';
   let show = false;
 
   const GetApiKey = async () => {
@@ -50,7 +52,6 @@
             <button on:click={() => copy(apikey.key)}>copy</button>
           </div>
         </div>
-        
       {/await}
     {/if}
   {/if}
@@ -65,9 +66,6 @@
   h5 {
     margin: 0;
     padding: 0;
-  }
-  ul {
-    background-color: var(--code-background);
   }
 
   img {

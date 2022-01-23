@@ -94,7 +94,7 @@
 
   {#await request then userUploads}
     {#if userUploads.uploads.length > 0}
-      <div class="gallery">
+      <div class="row">
         {#each userUploads.uploads as gif}
           <Upload {gif} on:deletegif={deleteGif} {canDelete} />
         {/each}
@@ -112,13 +112,3 @@
     {/if}
   {/await}
 {/if}
-
-<style>
-  .gallery {
-    display: grid;
-    grid-column-gap: 40px;
-    grid-row-gap: 40px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    max-width: auto;
-  }
-</style>
