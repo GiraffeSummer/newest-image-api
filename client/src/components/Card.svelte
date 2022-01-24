@@ -1,13 +1,13 @@
 <script>
-  export let src = '';
-  export let alt = '';
+  export let src = "";
+  export let alt = "";
 </script>
 
 <div class="card small col-lg">
   <h2>
     <slot name="header">Unknown header</slot>
   </h2>
-  <div><img {alt} {src} class="section media"/></div>
+  <div><img {alt} {src} class="section media" /></div>
   <div class="footer">
     <slot name="footer" />
   </div>
@@ -18,13 +18,20 @@
     /*width: 300px;
     padding: 1em;
     margin: 0 0 1em 0;*/
-    border: 1px solid #aaa;
+    /* border: 1px solid #aaa;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 
     width: 100%;
-    height: 100%;
+    height: 100%;*/
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+    
+    max-width: 25%;/*350px;*/
+    min-width: 150px;
+    min-height: 180px;
   }
 
   h2 {
@@ -33,7 +40,8 @@
   img {
     /* width: 300px;*/
     width: 100%;
-    object-fit: contain;
+    /*object-fit: contain;*/
     margin: 0;
+    min-width: 100%;
   }
 </style>
