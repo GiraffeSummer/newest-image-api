@@ -41,7 +41,7 @@
   <div class="message toast top" class:active="{messageActive}">{message}</div>
 {/if}
 
-<div class="card col-lg">
+<div class="card large ">
   <h3>{user.username}</h3>
   <form class="form" on:submit|preventDefault={updateUser}>
     <img src={user.avatar} alt={user.username} />

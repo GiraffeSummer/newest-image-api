@@ -67,7 +67,7 @@
   <div class="message toast top" class:active="{messageActive}">{message}</div>
 {/if}
 
-<form class="form input-group" on:submit|preventDefault={onSubmit}>
+<form class="form input-group " on:submit|preventDefault={onSubmit}>
   <label for="name">Name: </label>
   <input
     class="input"

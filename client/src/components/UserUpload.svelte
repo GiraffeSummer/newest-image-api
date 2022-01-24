@@ -105,7 +105,7 @@
   <div class="message toast top" class:active={messageActive}>{message}</div>
 {/if}
 
-<div class="card col-lg">
+<div class="card large col-lg">
   <form class="input-group" on:submit|preventDefault={updateGif}>
     <label for="name">Name: </label>
     <input
@@ -150,7 +150,7 @@
     padding: 10px 15px;
   }
   input[type='text'] {
-    max-width: 100%;
+    width: 100%;
   }
 
   img {

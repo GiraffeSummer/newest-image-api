@@ -94,7 +94,7 @@
 
   {#await request then userUploads}
     {#if userUploads.uploads.length > 0}
-      <div class="row">
+      <div class="row ">
         {#each userUploads.uploads as gif}
           <Upload {gif} on:deletegif={deleteGif} {canDelete} />
         {/each}

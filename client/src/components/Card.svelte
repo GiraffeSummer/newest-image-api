@@ -3,7 +3,7 @@
   export let alt = '';
 </script>
 
-<div class="card col-lg">
+<div class="card small col-lg">
   <h2>
     <slot name="header">Unknown header</slot>
   </h2>
