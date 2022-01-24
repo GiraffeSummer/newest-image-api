@@ -154,7 +154,7 @@ p {
 
 body {
     color: var(--white);
-    background-color: var(--main-color);
+   /* background-color: var(--main-color);*/
 }
 
 ul img {
