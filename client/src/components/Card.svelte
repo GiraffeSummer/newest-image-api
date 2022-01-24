@@ -20,7 +20,7 @@
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 
     /*max-width: 350px;*/
-    min-width: 25%;
+    min-width: 20%;
   }
 
   h2 {
