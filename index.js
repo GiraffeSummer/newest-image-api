@@ -104,13 +104,16 @@ const SessionOpts = session({
     secret: process.env.COOKIEKEY,
     resave: true,
     store: MongoStore.create({ mongoUrl: 'mongodb://' + process.env.MONGODB_URI, collection: 'sessions', ttl: 24 * 60 * 60 }),
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { secure: /*!DEVELOPMENT*/false/*This has to stay false, otherwise logins don't work*/, maxAge: 8 * 60 * 60 * 1000 }
 })
 app.use(SessionOpts);
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+passport.use(require("./lib/passport/apiStrategy"));
 
 passport.use(require("./lib/passport/discordStrategy"))
 

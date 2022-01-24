@@ -2,7 +2,7 @@ const express = require('express');
 const Router = express.Router();
 
 const { db, GetSafeUser, settings } = require("../index.js");
-const { ensureKey } = require("../lib/apiManager")
+const { ensureKey, ensurePerms } = require("../lib/apiManager")
 module.exports = Router;
 
 
@@ -10,7 +10,7 @@ const baseUrl = settings.get('baseUrl')
 
 
 //fulltext (needs work probably - maybe just get titles/names for autocomplete)
-Router.get('/find/query/:search', ensureKey, async (req, res) => {
+Router.get('/find/query/:search', /*ensureKey,*/ async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
 
@@ -68,7 +68,7 @@ Router.get('/find/query/:search', ensureKey, async (req, res) => {
 
 
 
-Router.get('/find/:search', ensureKey, async (req, res) => {
+Router.get('/find/:search', /*ensureKey,*/ async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
 

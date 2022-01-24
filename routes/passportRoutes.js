@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 
-const { passport, GetSafeUser, settings } = require("../index.js");
+const { passport, GetSafeUser, settings, db } = require("../index.js");
 module.exports = Router;
 const redirectUrl = settings.get('frontEndUrl');
 
@@ -26,3 +26,5 @@ Router.get('/auth/discord/callback',
 Router.get("/login", (req, res) => {
     res.redirect(settings.get('frontEndUrl'));
 })
+
+//passport.authenticate('bearer', { session: false }),
