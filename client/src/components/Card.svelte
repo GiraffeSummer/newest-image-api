@@ -15,33 +15,22 @@
 
 <style>
   .card {
-    /*width: 300px;
-    padding: 1em;
-    margin: 0 0 1em 0;*/
-    /* border: 1px solid #aaa;
     border-radius: 10px;
     padding: 10px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 
-    width: 100%;
-    height: 100%;*/
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
-    
-    max-width: 25%;/*350px;*/
-    min-width: 150px;
-    min-height: 180px;
+    /*max-width: 350px;*/
+    min-width: 25%;
   }
 
   h2 {
     margin: 0;
   }
   img {
-    /* width: 300px;*/
+    /*
+    width: 250px;max-width: 500px;*/
     width: 100%;
-    /*object-fit: contain;*/
+    object-fit: contain;
     margin: 0;
-    min-width: 100%;
   }
 </style>
