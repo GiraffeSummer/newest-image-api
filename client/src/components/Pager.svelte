@@ -9,25 +9,15 @@
   const changePage = (nr) => {
     page = nr;
     $goto('./' + page);
-
-    next = page < maxPages;
-    back = page > 1;
   };
+  
+  $: (next = page < maxPages), (back = page > 1);
 
-  let next = true;
-  let back = true;
-  const maxPages = list.length / maxItems < 1 ? 1 : list.length / maxItems;
+  $: maxPages = list.length / maxItems < 1 ? 1 : list.length / maxItems;
 
   $: page = parseInt(page);
   changePage(page);
 
-  let len = [];
-
-  let proppedList = list.map((x) => {
-    let t = {};
-    t[prop] = x;
-    return t;
-  });
   $: proppedList = list.map((x) => {
     let t = {};
     t[prop] = x;
@@ -38,6 +28,9 @@
     maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
     maxItems * (page - 1) + maxItems
   );
+
+  //this is for future expansion (direct clickable pages)
+  let len = [];
 </script>
 
 <div class="row">
@@ -58,7 +51,7 @@
   .button-group {
     max-width: 20%;
   }
-  button:disabled{
+  button:disabled {
     pointer-events: none;
   }
   button:hover {
