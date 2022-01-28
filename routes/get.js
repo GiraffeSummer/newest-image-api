@@ -10,7 +10,7 @@ const baseUrl = settings.get('baseUrl')
 
 
 //fulltext (needs work probably - maybe just get titles/names for autocomplete)
-Router.get('/find/query/:search', /*ensureKey,*/ async (req, res) => {
+Router.get('/api/find/:search', /*ensureKey,*/ async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
 

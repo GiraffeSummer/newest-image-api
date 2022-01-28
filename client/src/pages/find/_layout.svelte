@@ -18,7 +18,7 @@
 
     $lastSearch = `${tags}`;
     const res = await fetch(
-      backend + '/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
+      backend + '/api/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
       }
