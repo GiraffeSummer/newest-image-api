@@ -13,16 +13,16 @@ if (process.env.NODE_ENV === 'production') {
     app.use('/assets', express.static('client/dist/assets'));
 
     const routify_routes = require('../client/.routify/urlIndex.json');
+    //adding the root extra
+    const indexed = routify_routes.filter(x => x.endsWith('/index')).map(x => x.slice(0, -'index'.length)).filter(x => x != '/');
 
-    Router.get(['/', ...routify_routes], (req, res) => {
+    Router.get(['/', ...indexed, ...routify_routes], (req, res) => {
         res.sendFile(path.resolve(process.cwd(), 'client', 'dist', 'index.html'));
     });
 
 } else {
-
     app.use('/src', express.static('client/src'));
     Router.get('/', (req, res) => {
         res.sendFile(path.resolve(process.cwd(), 'client', 'index.html'));
     });
-
 }
