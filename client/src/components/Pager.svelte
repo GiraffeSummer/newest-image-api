@@ -10,8 +10,9 @@
     page = nr;
     $goto('./' + page);
   };
-  
-  $: (next = page < maxPages), (back = page > 1);
+
+  $: next = page < maxPages;
+  $: back = page > 1;
 
   $: maxPages = list.length / maxItems < 1 ? 1 : list.length / maxItems;
 
