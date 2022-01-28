@@ -55,7 +55,7 @@
   };
 </script>
 
-<form class="form input-group ">
+<form class="form input-group" on:submit|preventDefault={() => {}}>
   <input
     type="text"
     id="search"
@@ -74,7 +74,7 @@
     />
     Show Nsfw?
   </label>
-  <button class='tertiary' on:click={getData} id="searchBtn">Search</button>
+  <button class="tertiary" on:click={getData} id="searchBtn">Search</button>
 </form>
 <br /><br />
 <slot />
