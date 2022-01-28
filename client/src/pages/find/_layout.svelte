@@ -55,24 +55,26 @@
   };
 </script>
 
-<input
-  type="text"
-  id="search"
-  placeholder="Search..."
-  bind:value={tags}
-  on:keydown={(e) => {
-    checkEnter(e, getData);
-  }}
-/>
-<label for="showNsfw">
+<form class="form input-group ">
   <input
-    id="showNsfw"
-    type="checkbox"
-    bind:checked={showNsfw}
-    on:change={getData}
+    type="text"
+    id="search"
+    placeholder="Search..."
+    bind:value={tags}
+    on:keydown={(e) => {
+      checkEnter(e, getData);
+    }}
   />
-  Show Nsfw?
-</label>
-<button on:click={getData} id="searchBtn">Search</button>
+  <label for="showNsfw">
+    <input
+      id="showNsfw"
+      type="checkbox"
+      bind:checked={showNsfw}
+      on:change={getData}
+    />
+    Show Nsfw?
+  </label>
+  <button class='tertiary' on:click={getData} id="searchBtn">Search</button>
+</form>
 <br /><br />
 <slot />
