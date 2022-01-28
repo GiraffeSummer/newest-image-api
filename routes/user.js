@@ -65,3 +65,7 @@ Router.post('/user/:id', ensurePerms(['manage_user']), async (req, res) => {
 
     res.send({ success: true, status: 'ok', user: GetSafeUser(req.user, true), permissions: perms, newuser: CleanObject(doc, allowedFields) })
 })
+
+Router.get('/data/user', (req, res) => {
+    res.json({ user: GetSafeUser(req.user, true) })
+});
