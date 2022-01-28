@@ -69,7 +69,7 @@
     id="showNsfw"
     type="checkbox"
     bind:checked={showNsfw}
-    on:change={() => (canSearch = true)}
+    on:change={getData}
   />
   Show Nsfw?
 </label>

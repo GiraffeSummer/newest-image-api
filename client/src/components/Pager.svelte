@@ -3,7 +3,7 @@
   export let list = [];
   export let component;
   export let prop = 'prop';
-  export let maxItems = 3;
+  export let maxItems = 20;
   export let page;
 
   const changePage = (nr) => {
