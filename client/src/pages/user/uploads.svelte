@@ -1,4 +1,5 @@
 <script>
+  import Pager from '../../components/Pager.svelte';
   import { metatags } from '@roxi/routify';
   import { backend, user } from '../../stores.js';
   import Upload from '../../components/UserUpload.svelte';
@@ -95,6 +96,12 @@
   {#await request then userUploads}
     {#if userUploads.uploads.length > 0}
       <div class="row ">
+        <Pager
+          list={userUploads.uploads}
+          component={Upload}
+          prop="gif"
+          {page}
+        />
         {#each userUploads.uploads as gif}
           <Upload {gif} on:deletegif={deleteGif} {canDelete} />
         {/each}

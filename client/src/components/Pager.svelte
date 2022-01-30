@@ -1,13 +1,14 @@
 <script>
-  import { goto } from '@roxi/routify';
+  import { goto, params } from '@roxi/routify';
   export let list = [];
   export let component;
   export let prop = 'prop';
-  export let maxItems = 20;
-  export let page;
+  export let maxItems = 1;
+
+  $: page = $params.page || 1;
 
   const changePage = (nr) => {
-    page = nr;
+    page = nr || 1;
     $goto('./' + page);
   };
 
@@ -31,7 +32,8 @@
   );
 
   //this is for future expansion (direct clickable pages)
-  let len = [];
+  let pre = []; //before current page
+  let pos = []; //after current page
 </script>
 
 <div class="row">
@@ -41,8 +43,11 @@
 </div>
 <div class="button-group" style={maxPages == 1 ? 'display: none;' : ''}>
   <button disabled={!back} on:click={changePage(page - 1)}>◀ Back</button>
-  <button disabled>{page}</button>
-  {#each len as l, i}
+  {#each pre as l, i}
+    <button>{i}</button>
+  {/each}
+  <button disabled>{page}/{maxPages}</button>
+  {#each pos as l, i}
     <button>{i}</button>
   {/each}
   <button disabled={!next} on:click={changePage(page + 1)}>Next ▶ </button>
