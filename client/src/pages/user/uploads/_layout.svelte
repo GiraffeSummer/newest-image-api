@@ -42,7 +42,7 @@
   //+ `${(showNsfw) ? '?nsfw=true' : ''}`
   const GetUserUploads = async () => {
     const res = await fetch(
-      backend + '/user/uploads/' + selected + `${showNsfw ? '?nsfw=true' : ''}`,
+      backend + '/user/get-uploads/' + selected + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
       }

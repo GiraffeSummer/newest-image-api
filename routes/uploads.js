@@ -34,7 +34,7 @@ Router.get('/user/file-uploads', ensurePerms(['upload']), async (req, res) => {
     res.send({ user: { ...GetSafeUser(req.user, true), _id: req.user._id }, uploads })
 })
 
-Router.get('/user/uploads/:id', ensurePerms(['upload', 'access_user']), async (req, res) => {
+Router.get('/user/get-uploads/:id', ensurePerms(['upload', 'access_user']), async (req, res) => {
     let user = await db.schemas.Users.findOne({ _id: req.params.id });
     const nsfw = req.query.nsfw == 'true' || false;
 
