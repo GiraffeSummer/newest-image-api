@@ -103,8 +103,6 @@
   };
   let message,
     messageActive = false;
-
-  console.log(canDelete);
 </script>
 
 {#if messageActive}
