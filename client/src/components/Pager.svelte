@@ -16,7 +16,7 @@
   $: next = page < maxPages;
   $: back = page > 1;
 
-  $: maxPages = list.length / maxItems < 1 ? 1 : list.length / maxItems;
+  $: maxPages = Math.ceil(list.length / maxItems < 1 ? 1 : list.length / maxItems);
 
   $: page = parseInt(page);
   changePage(page);
