@@ -45,9 +45,17 @@ export function addListener(evtName, listener) {
 }
 
 export function dispatchEvent(evtName, data) {
-    if (typeof elem[evtName] === 'function'){
+    if (typeof elem[evtName] === 'function') {
         return elem[evtName](data);
     }
     else
         throw new Error('listener is not a function');
+}
+
+export function searchQuery(q = null) {
+    if (location.search == '') return Object.create({});
+    let search = location.search.substring(1);
+    let obj = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+    if (q != null && obj.hasOwnProperty(q)) return obj[q];
+    else return obj
 }
