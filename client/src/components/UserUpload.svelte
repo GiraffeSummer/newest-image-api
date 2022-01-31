@@ -7,6 +7,7 @@
     safeFileName,
     objectMap,
     maxTags,
+    dispatchEvent,
   } from '../stores.js';
 
   import { createEventDispatcher } from 'svelte';
@@ -14,8 +15,8 @@
   const dispatch = createEventDispatcher();
 
   export let gif;
-
-  export let canDelete = false;
+  export let properties = {};
+  let canDelete = properties.canDelete || false;
 
   const updateGif = async () => {
     const _nsfw = gif.nsfw != isnsfw;
@@ -86,6 +87,9 @@
       });
       const res = await response.json();
       if (res.status == 'ok') {
+        //custom event working with code
+        dispatchEvent('deletegif', gif);
+        //svelte event, functional,not with pagination
         dispatch('deletegif', {
           gif,
         });
@@ -99,6 +103,8 @@
   };
   let message,
     messageActive = false;
+
+  console.log(canDelete);
 </script>
 
 {#if messageActive}

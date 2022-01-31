@@ -2,7 +2,8 @@
   import { backend, user as _user, HighestPermission } from '../stores.js';
 
   export let user;
-  export let permissions;
+  export let properties = {};
+  let { permissions } = properties;
 
   let message,
     messageActive = false;
@@ -17,8 +18,8 @@
     });
     const res = await response.json();
 
-    if(res?.success == true){
-      createMessage(`Success`)
+    if (res?.success == true) {
+      createMessage(`Success`);
     } else createMessage(`Failed`);
   };
   const createMessage = (content = 'message', delay = 3) => {
@@ -38,7 +39,7 @@
 </script>
 
 {#if messageActive}
-  <div class="message toast top" class:active="{messageActive}">{message}</div>
+  <div class="message toast top" class:active={messageActive}>{message}</div>
 {/if}
 
 <div class="card large ">

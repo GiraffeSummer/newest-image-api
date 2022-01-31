@@ -1,8 +1,8 @@
 <script>
-  import Pager from '../../components/Pager.svelte';
+  import Pager from '../../../components/Pager.svelte';
   import { metatags } from '@roxi/routify';
-  import { backend, user } from '../../stores.js';
-  import Upload from '../../components/UserUpload.svelte';
+  import { backend, user, addListener } from '../../../stores.js';
+  import Upload from '../../../components/UserUpload.svelte';
   import { onMount } from 'svelte';
 
   let users = [];
@@ -12,7 +12,7 @@
 
   let userData = {};
 
-  let canDelete = false;
+  export let canDelete = false;
 
   metatags.title = 'Uploads';
   metatags.description = 'User uploads';
@@ -29,7 +29,7 @@
     userData = data;
     selected = userData.user._id;
 
-    request = GetUserUploads();
+    getNew();
 
     const getUsers = await fetch(backend + '/user/all/content', {
       credentials: 'include',
@@ -66,14 +66,26 @@
       userUploads.uploads = userUploads.uploads.filter(filter);
     }
   };
+
+  addListener('deletegif', (gif) => {
+    const filter = (g) => {
+      return g._id != gif._id;
+    };
+    if (userData.user._id == selected) {
+      userData.uploads = userData.uploads.filter(filter);
+    } else {
+      userUploads.uploads = userUploads.uploads.filter(filter);
+    }
+  });
+
+  const getNew = () => {
+    request = GetUserUploads();
+  };
 </script>
 
 {#if userData != {} && Array.isArray(userData?.uploads) && users.length >= 0}
   {#if userData.user.permissions.includes('manage_user')}
-    <select
-      bind:value={selected}
-      on:change={() => (request = GetUserUploads())}
-    >
+    <select bind:value={selected} on:change={getNew}>
       {#each users as user}
         <option value={user._id}>
           {user.username}
@@ -88,31 +100,27 @@
       id="showNsfw"
       type="checkbox"
       bind:checked={showNsfw}
-      on:change={() => (request = GetUserUploads())}
+      on:change={getNew}
     />
     Show Nsfw?
   </label>
 
   {#await request then userUploads}
     {#if userUploads.uploads.length > 0}
-      <div class="row ">
-        <Pager
-          list={userUploads.uploads}
-          component={Upload}
-          prop="gif"
-          {page}
-        />
-        {#each userUploads.uploads as gif}
-          <Upload {gif} on:deletegif={deleteGif} {canDelete} />
-        {/each}
-      </div>
+      <Pager
+        list={userUploads.uploads}
+        properties={{ canDelete, 'on:deletegif': { deleteGif } }}
+        component={Upload}
+        prop="gif"
+        maxItems="6"
+      />
     {:else}
       <br />
-      <b
-        >{userUploads.uploader.username} has no uploads {userUploads.nsfwResults
+      <b>
+        {userUploads.uploader.username} has no uploads {userUploads.nsfwResults
           ? `${userUploads.nsfwResults} Nsfw uploads`
-          : ''}</b
-      >
+          : ''}
+      </b>
     {/if}
     {#if userUploads.nsfwResults != undefined && !showNsfw && userUploads.uploads.length >= 1}
       {userUploads.nsfwResults} more Nsfw uploads

@@ -36,3 +36,18 @@ export function HighestPermission(user) {
 
     return { index, permission: PermissionKeys[index] }
 }
+
+
+const elem = {}
+
+export function addListener(evtName, listener) {
+    elem[evtName] = listener;
+}
+
+export function dispatchEvent(evtName, data) {
+    if (typeof elem[evtName] === 'function'){
+        return elem[evtName](data);
+    }
+    else
+        throw new Error('listener is not a function');
+}

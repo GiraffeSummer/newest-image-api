@@ -3,7 +3,8 @@
   export let list = [];
   export let component;
   export let prop = 'prop';
-  export let maxItems = 1;
+  export let maxItems = 10;
+  export let properties = {};
 
   $: page = $params.page || 1;
 
@@ -38,7 +39,7 @@
 
 <div class="row">
   {#each items as item}
-    <svelte:component this={component} {...item} />
+    <svelte:component this={component} {...item} {item} {properties} />
   {/each}
 </div>
 <div class="button-group" style={maxPages == 1 ? 'display: none;' : ''}>

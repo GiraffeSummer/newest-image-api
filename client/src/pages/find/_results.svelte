@@ -5,7 +5,7 @@
 </script>
 
 {#if $gifImages.length > 0}
-  <Pager list={$gifImages} component={SimpleGif} prop="gif" />
+  <Pager list={$gifImages} component={SimpleGif} prop="gif" maxItems=20 />
   <br />
   <h3>Raw:</h3>
   <div id="code"><pre>{$result}</pre></div>
