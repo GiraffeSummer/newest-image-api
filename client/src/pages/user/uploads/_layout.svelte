@@ -112,7 +112,7 @@
         properties={{ canDelete, 'on:deletegif': { deleteGif } }}
         component={Upload}
         prop="gif"
-        maxItems="6"
+        maxItems={6}
       />
     {:else}
       <br />

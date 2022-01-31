@@ -41,12 +41,13 @@ export function HighestPermission(user) {
 const elem = {}
 
 export function addListener(evtName, listener) {
-    elem[evtName] = listener;
+    if (elem[evtName] == undefined) elem[evtName] =[];
+    elem[evtName].push(listener);
 }
 
 export function dispatchEvent(evtName, data) {
     if (typeof elem[evtName] === 'function') {
-        return elem[evtName](data);
+        elem[evtName].forEach(evt=>{evt(data)});
     }
     else
         throw new Error('listener is not a function');

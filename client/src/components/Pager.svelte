@@ -1,10 +1,12 @@
 <script>
   import { goto, params } from '@roxi/routify';
+  
   export let list = [];
   export let component;
   export let prop = 'prop';
   export let maxItems = 10;
   export let properties = {};
+  let items =[]
 
   $: page = $params.page || 1;
 
@@ -16,21 +18,23 @@
   $: next = page < maxPages;
   $: back = page > 1;
 
-  $: maxPages = list.length / maxItems < 1 ? 1 : Math.ceil(list.length / maxItems);
+  $: maxPages =
+    list.length / maxItems < 1 ? 1 : Math.ceil(list.length / maxItems);
 
   $: page = parseInt(page);
   changePage(page);
 
-  $: proppedList = list.map((x) => {
-    let t = {};
-    t[prop] = x;
-    return t;
-  });
-
-  $: items = proppedList.slice(
+  $: {
+    let proppedList = list.map((x) => {
+      let t = {};
+      t[prop] = x;
+      return t;
+    });
+    items = proppedList.slice(
     maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
     maxItems * (page - 1) + maxItems
   );
+  }
 
   //this is for future expansion (direct clickable pages)
   let pre = []; //before current page

@@ -23,6 +23,6 @@
     list={users}
     properties={{ permissions }}
     component={UserCard}
-    maxItems="6"
+    maxItems={6}
   />
 {/if}
