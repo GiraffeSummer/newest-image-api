@@ -1,12 +1,13 @@
 <script>
+  import { writable } from 'svelte/store';
   import { goto, params } from '@roxi/routify';
-  
+
   export let list = [];
   export let component;
   export let prop = 'prop';
   export let maxItems = 10;
   export let properties = {};
-  let items =[]
+  let items = writable([]);
 
   $: page = $params.page || 1;
 
@@ -30,10 +31,12 @@
       t[prop] = x;
       return t;
     });
-    items = proppedList.slice(
-    maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
-    maxItems * (page - 1) + maxItems
-  );
+    items.set(
+      proppedList.slice(
+        maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
+        maxItems * (page - 1) + maxItems
+      )
+    );
   }
 
   //this is for future expansion (direct clickable pages)
@@ -42,7 +45,7 @@
 </script>
 
 <div class="row">
-  {#each items as item}
+  {#each $items as item}
     <svelte:component this={component} {...item} {item} {properties} />
   {/each}
 </div>
