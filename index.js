@@ -15,7 +15,7 @@ const settings = require("./lib/settings");
 
 const APPNAME = settings.get('appName');
 const BaseDomain = "https://" + APPNAME + ".loca.lt";
-const allowedOrigins = [BaseDomain, "https://google.com", "https://cdn.discordapp.com/",
+const allowedOrigins = [BaseDomain, "https://google.com", "https://cdn.discordapp.com/", 'https://matomo.cripplerick.com/',
     `http://localhost:${PORT}`, `http://127.0.0.1:${PORT}`,
     "http://localhost:5000", "http://127.0.0.1:5000", settings.get('frontEndUrl')];
 
@@ -93,7 +93,7 @@ app.use(
         contentSecurityPolicy: {
             directives: {
                 ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-                'img-src': ["'self'", 'https://cdn.discordapp.com/'],
+                'img-src': ["'self'", 'https://cdn.discordapp.com/', 'https://matomo.cripplerick.com/'],
             },
         },
     })
