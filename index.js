@@ -93,8 +93,9 @@ app.use(
         contentSecurityPolicy: {
             directives: {
                 ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-                'img-src': ["'self'", 'https://cdn.discordapp.com/', ],
-                'script-src': ["'self'",'https://matomo.cripplerick.com/']
+                'img-src': ["'self'", 'https://cdn.discordapp.com/', 'https://matomo.cripplerick.com/'],
+                'script-src': ["'self'", 'https://matomo.cripplerick.com/'],
+                'default-src': ["'self'", 'https://matomo.cripplerick.com/']
             },
         },
     })
