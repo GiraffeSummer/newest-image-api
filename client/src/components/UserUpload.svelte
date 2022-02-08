@@ -42,7 +42,7 @@
   let { tags, name: filename, nsfw: isnsfw } = gif;
 
   tags = tags.join(', ');
-
+  let tagAmount = tags.length > 1 ? tags.split(',').length : 0;
   $: {
     gif = gif;
     tagAmount = tags.length > 1 ? tags.split(',').length : 0;
