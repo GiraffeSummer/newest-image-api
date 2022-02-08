@@ -9,7 +9,7 @@ I have a cool permissions system.
 
 current push just is the main upload and get functionality
 
-Use https://sveltematerialui.com/ for new styling
+Uses Mini.css for styling
 
 TODO:
  - better scalibilty in admin, my uploads, and find pages

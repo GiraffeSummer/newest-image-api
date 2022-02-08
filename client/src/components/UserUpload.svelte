@@ -44,10 +44,10 @@
   tags = tags.join(', ');
 
   $: tagAmount = tags.length > 1 ? tags.split(',').length : 0;
-  $: tags = safeFileName(tags);
-  $: filename = safeFileName(filename);
+  $: gif.tags = safeFileName(gif.tags);
+  $: gif.filename = safeFileName(gif.filename);
 
-  $: isnsfw = [isnsfw, ...tags.split(',')].some((x) => {
+  $: gif.isnsfw = [gif.isnsfw, ...tags.split(',')].some((x) => {
     if (typeof x == 'string') return x.toLowerCase() == 'nsfw';
     else return x;
   });
@@ -117,14 +117,19 @@
       type="text"
       name="name"
       placeholder="enter a name"
-      bind:value={filename}
+      bind:value={gif.filename}
     />
     <img src={backend + gif.path} alt={gif.name} />
     <label for="nsfw">is NSFW</label>
-    <input class="input" type="checkbox" name="nsfw" bind:checked={isnsfw} />
+    <input
+      class="input"
+      type="checkbox"
+      name="nsfw"
+      bind:checked={gif.isnsfw}
+    />
     <br />
     <label for="tags">tags: (split with ,) (min {minTags} max {maxTags})</label>
-    <input type="text" id="tags" name="tags" bind:value={tags} />
+    <input type="text" id="tags" name="tags" bind:value={gif.tags} />
     <br />
     <button class="tertiary" type="submit" tabindex="-1" enabled={validUpdate}
       >Update</button
