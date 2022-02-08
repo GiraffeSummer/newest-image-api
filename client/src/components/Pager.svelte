@@ -32,10 +32,11 @@
       t[prop] = x;
       return t;
     });
-    $items = proppedList.slice(
-      maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
-      maxItems * (page - 1) + maxItems
-    );
+    let startIndex = maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1);
+    let endIndex = maxItems * (page - 1) + maxItems;
+    $items = proppedList.slice(startIndex, endIndex);
+    console.log(startIndex, `current ${page}`, endIndex);
+    console.log('items: ', $items.length, $items);
   }
 
   //this is for future expansion (direct clickable pages)
