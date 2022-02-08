@@ -14,6 +14,7 @@
   const changePage = (nr) => {
     page = nr || 1;
     $goto('./' + page);
+    // list = list;//maybe for content update
   };
 
   $: next = page < maxPages;
@@ -31,11 +32,9 @@
       t[prop] = x;
       return t;
     });
-    items.set(
-      proppedList.slice(
-        maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
-        maxItems * (page - 1) + maxItems
-      )
+    $items = proppedList.slice(
+      maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1),
+      maxItems * (page - 1) + maxItems
     );
   }
 
