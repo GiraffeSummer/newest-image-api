@@ -19,11 +19,11 @@
   let canDelete = properties.canDelete || false;
 
   const updateGif = async () => {
-    const _nsfw = gif.nsfw != isnsfw;
-    const _name = gif.name != filename;
-    const _tags =
-      JSON.stringify(gif.tags) !=
-      JSON.stringify(tags.split(',').map((a) => a.trim()));
+    const _nsfw = true//gif.nsfw != isnsfw;
+    const _name = true//gif.name != filename;
+    const _tags =true
+     // JSON.stringify(gif.tags) !=
+     // JSON.stringify(gif.tags.split(',').map((a) => a.trim()));
 
     let newGif = {
       changes: { nsfw: _nsfw, tags: _tags, name: _name },
@@ -39,15 +39,15 @@
     if (res.status == 'ok') createMessage(`Gif was updated`);
   };
 
-  let { tags, name: filename, nsfw: isnsfw } = gif;
+  //let { tags, name: filename, nsfw: isnsfw } = gif;
 
-  tags = tags.join(', ');
+  gif.tags = gif.tags.join(', ');
 
   $: tagAmount = tags.length > 1 ? tags.split(',').length : 0;
   $: gif.tags = safeFileName(gif.tags);
-  $: gif.filename = safeFileName(gif.filename);
+  $: gif.name = safeFileName(gif.name);
 
-  $: gif.isnsfw = [gif.isnsfw, ...tags.split(',')].some((x) => {
+  $: gif.nsfw = [gif.nsfw, ...tags.split(',')].some((x) => {
     if (typeof x == 'string') return x.toLowerCase() == 'nsfw';
     else return x;
   });
@@ -117,7 +117,7 @@
       type="text"
       name="name"
       placeholder="enter a name"
-      bind:value={gif.filename}
+      bind:value={gif.name}
     />
     <img src={backend + gif.path} alt={gif.name} />
     <label for="nsfw">is NSFW</label>
@@ -125,7 +125,7 @@
       class="input"
       type="checkbox"
       name="nsfw"
-      bind:checked={gif.isnsfw}
+      bind:checked={gif.nsfw}
     />
     <br />
     <label for="tags">tags: (split with ,) (min {minTags} max {maxTags})</label>
