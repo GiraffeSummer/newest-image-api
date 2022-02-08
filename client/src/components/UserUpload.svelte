@@ -1,4 +1,5 @@
 <script>
+  import { writable } from 'svelte/store';
   const allowedFields = ['nsfw', 'tags', 'name', '_id'];
   import {
     backend,
@@ -14,15 +15,15 @@
 
   const dispatch = createEventDispatcher();
 
-  export let gif;
+  export let gif = writable({});
   export let properties = {};
   let canDelete = properties.canDelete || false;
 
   const updateGif = async () => {
-    const _nsfw = gif.nsfw != isnsfw;
-    const _name = gif.name != filename;
+    const _nsfw = $gif.nsfw != isnsfw;
+    const _name = $gif.name != filename;
     const _tags =
-      JSON.stringify(gif.tags) !=
+      JSON.stringify($gif.tags) !=
       JSON.stringify(tags.split(',').map((a) => a.trim()));
 
     let newGif = {
@@ -39,7 +40,7 @@
     if (res.status == 'ok') createMessage(`Gif was updated`);
   };
 
-  let { tags, name: filename, nsfw: isnsfw } = gif;
+  let { tags, name: filename, nsfw: isnsfw } = $gif;
 
   tags = tags.join(', ');
 
@@ -60,7 +61,7 @@
     }, delay * 1000);
   };
   const PostUpdate = async (newGif) => {
-    const response = await fetch(backend + '/update-upload/' + gif._id, {
+    const response = await fetch(backend + '/update-upload/' + $gif._id, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,10 +75,10 @@
 
   const deleteUpload = async () => {
     if (!canDelete) return;
-    const c = confirm(`Are you sure you want to delete '${gif.name}'?`);
+    const c = confirm(`Are you sure you want to delete '${$gif.name}'?`);
 
     if (c) {
-      const response = await fetch(backend + '/update-upload/' + gif._id, {
+      const response = await fetch(backend + '/update-upload/' + $gif._id, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -88,10 +89,10 @@
       const res = await response.json();
       if (res.status == 'ok') {
         //custom event working with code
-        dispatchEvent('deletegif', gif);
+        dispatchEvent('deletegif', $gif);
         //svelte event, functional,not with pagination
         dispatch('deletegif', {
-          gif,
+          $gif,
         });
         createMessage('successfully deleted');
       }
@@ -110,7 +111,7 @@
 {/if}
 
 <div class="card large col-lg">
-  {JSON.stringify(gif)}
+  {JSON.stringify($gif)}
   <form class="input-group" on:submit|preventDefault={updateGif}>
     <label for="name">Name: </label>
     <input
@@ -120,7 +121,7 @@
       placeholder="enter a name"
       bind:value={filename}
     />
-    <img src={backend + gif.path} alt={gif.name} />
+    <img src={backend + $gif.path} alt={$gif.name} />
     <label for="nsfw">is NSFW</label>
     <input class="input" type="checkbox" name="nsfw" bind:checked={isnsfw} />
     <br />
