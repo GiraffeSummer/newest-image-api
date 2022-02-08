@@ -16,7 +16,6 @@
 
   export let gif;
   export let properties = {};
-  export let tags, filename, isnsfw;
   let canDelete = properties.canDelete || false;
 
   const updateGif = async () => {
@@ -40,11 +39,7 @@
     if (res.status == 'ok') createMessage(`Gif was updated`);
   };
 
-  $: {
-    tags = gif.tags;
-    filename = gif.name;
-    isnsfw = gif.nsfw;
-  }
+  let { tags, name: filename, nsfw: isnsfw } = gif;
 
   tags = tags.join(', ');
 
