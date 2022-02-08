@@ -111,7 +111,7 @@
 
 <div class="card large col-lg">
   <form class="input-group" on:submit|preventDefault={updateGif}>
-    <label for="name">Name: {filename}(test)</label>
+    <label for="name">Name: </label>
     <input
       class="input"
       type="text"
