@@ -34,6 +34,7 @@
     });
     let startIndex = maxItems * (page - 1) < 0 ? 0 : maxItems * (page - 1);
     let endIndex = maxItems * (page - 1) + maxItems;
+    $items = [];
     $items = proppedList.slice(startIndex, endIndex);
     console.log(startIndex, `current ${page}`, endIndex);
     console.log('items: ', $items.length, $items);
