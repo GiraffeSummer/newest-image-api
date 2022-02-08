@@ -19,11 +19,11 @@
   let canDelete = properties.canDelete || false;
 
   const updateGif = async () => {
-    const _nsfw = true//gif.nsfw != isnsfw;
-    const _name = true//gif.name != filename;
-    const _tags =true
-     // JSON.stringify(gif.tags) !=
-     // JSON.stringify(gif.tags.split(',').map((a) => a.trim()));
+    const _nsfw = gif.nsfw != isnsfw;
+    const _name = gif.name != filename;
+    const _tags =
+      JSON.stringify(gif.tags) !=
+      JSON.stringify(tags.split(',').map((a) => a.trim()));
 
     let newGif = {
       changes: { nsfw: _nsfw, tags: _tags, name: _name },
@@ -39,15 +39,15 @@
     if (res.status == 'ok') createMessage(`Gif was updated`);
   };
 
-  //let { tags, name: filename, nsfw: isnsfw } = gif;
+  let { tags, name: filename, nsfw: isnsfw } = gif;
 
-  gif.tags = gif.tags.join(', ');
+  tags = tags.join(', ');
 
-  $: tagAmount = gif.tags.length > 1 ? gif.tags.split(',').length : 0;
-  $: gif.tags = safeFileName(gif.tags);
-  $: gif.name = safeFileName(gif.name);
+  $: tagAmount = tags.length > 1 ? tags.split(',').length : 0;
+  $: tags = safeFileName(tags);
+  $: filename = safeFileName(filename);
 
-  $: gif.nsfw = [gif.nsfw, ...gif.tags.split(',')].some((x) => {
+  $: isnsfw = [isnsfw, ...tags.split(',')].some((x) => {
     if (typeof x == 'string') return x.toLowerCase() == 'nsfw';
     else return x;
   });
@@ -111,25 +111,20 @@
 
 <div class="card large col-lg">
   <form class="input-group" on:submit|preventDefault={updateGif}>
-    <label for="name">Name: </label>
+    <label for="name">Name: {filename}(test)</label>
     <input
       class="input"
       type="text"
       name="name"
       placeholder="enter a name"
-      bind:value={gif.name}
+      bind:value={filename}
     />
     <img src={backend + gif.path} alt={gif.name} />
     <label for="nsfw">is NSFW</label>
-    <input
-      class="input"
-      type="checkbox"
-      name="nsfw"
-      bind:checked={gif.nsfw}
-    />
+    <input class="input" type="checkbox" name="nsfw" bind:checked={isnsfw} />
     <br />
     <label for="tags">tags: (split with ,) (min {minTags} max {maxTags})</label>
-    <input type="text" id="tags" name="tags" bind:value={gif.tags} />
+    <input type="text" id="tags" name="tags" bind:value={tags} />
     <br />
     <button class="tertiary" type="submit" tabindex="-1" enabled={validUpdate}
       >Update</button
