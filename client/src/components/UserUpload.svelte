@@ -113,7 +113,6 @@
 {/if}
 
 <div class="card large col-lg">
-  {JSON.stringify(gif)}
   <form class="input-group" on:submit|preventDefault={updateGif}>
     <label for="name">Name: </label>
     <input
