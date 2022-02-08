@@ -43,11 +43,11 @@
 
   gif.tags = gif.tags.join(', ');
 
-  $: tagAmount = tags.length > 1 ? tags.split(',').length : 0;
+  $: tagAmount = gif.tags.length > 1 ? gif.tags.split(',').length : 0;
   $: gif.tags = safeFileName(gif.tags);
   $: gif.name = safeFileName(gif.name);
 
-  $: gif.nsfw = [gif.nsfw, ...tags.split(',')].some((x) => {
+  $: gif.nsfw = [gif.nsfw, ...gif.tags.split(',')].some((x) => {
     if (typeof x == 'string') return x.toLowerCase() == 'nsfw';
     else return x;
   });
