@@ -1,22 +1,28 @@
 <script>
-  import { metatags, goto } from '@roxi/routify';
-  import { backend, safeFileName, user } from '../../stores.js';
-  import { gifImages, lastSearch, result } from './find.js';
+  import Card from '../components/Card.svelte';
+  import Pagination from '../components/Pagination.svelte';
+  import { metatags } from '@roxi/routify';
+  import { backend, safeFileName, user } from '../stores.js';
+
   let tags = '';
   let showNsfw = false;
 
   $: tags = safeFileName(tags);
 
+  let lastSearch = '';
+  let gifImages = [];
+  let result = {};
+
   //reduce spam of API requests
   let canSearch = true;
-  $: canSearch = $lastSearch != tags;
+  $: canSearch = lastSearch != tags;
 
   metatags.title = 'Find';
   metatags.description = '';
   const getData = async () => {
     if (!canSearch) return;
 
-    $lastSearch = `${tags}`;
+    lastSearch = `${tags}`;
     const res = await fetch(
       backend + '/api/find/' + tags + `${showNsfw ? '?nsfw=true' : ''}`,
       {
@@ -31,21 +37,19 @@
     });
 
     /*
-      for (let i = 0; i < gifs.length; i++) {
-        gifs[i].path = `<a href='${gifs[i].path}'>${gifs[i].name}</a>`;
-      }
-      //make avatar link
-      gifs = gifs.map((a) => {
-        a.user.avatar = `<a href='${a.user.avatar}'>${a.user.avatar}</a>`;
-        return a;
-      });*/
+        for (let i = 0; i < gifs.length; i++) {
+          gifs[i].path = `<a href='${gifs[i].path}'>${gifs[i].name}</a>`;
+        }
+        //make avatar link
+        gifs = gifs.map((a) => {
+          a.user.avatar = `<a href='${a.user.avatar}'>${a.user.avatar}</a>`;
+          return a;
+        });*/
 
-    $gifImages = gifs.map((gif) => {
+    gifImages = gifs.map((gif) => {
       return { name: gif.name, alt: gif.originalname, src: gif.url };
     });
-    $result = JSON.stringify(gifs, null, 2);
-
-    $goto('./1');
+    result = JSON.stringify(gifs, null, 2);
   };
 
   $: tags, getData();
@@ -77,4 +81,25 @@
   <button class="tertiary" on:click={getData} id="searchBtn">Search</button>
 </form>
 <br /><br />
-<slot />
+
+{#if gifImages.length > 0}
+  <Pagination items={gifImages} maxItems={10}>
+    <Card slot="body" let:prop={gif} alt={gif.name} src={gif.src}>
+      <div slot="header">
+        {gif.name}
+      </div>
+    </Card>
+  </Pagination>
+  <br />
+  <h3>Raw:</h3>
+  <div id="code"><pre>{result}</pre></div>
+{:else if lastSearch != ''}
+  <h6><i>Nothing found...</i></h6>
+{/if}
+
+<style>
+  pre {
+    overflow: scroll;
+    height: 500px;
+  }
+</style>

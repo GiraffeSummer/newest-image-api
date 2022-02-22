@@ -1,8 +1,8 @@
 <script>
-  import Pager from '../../../components/Pager.svelte';
+  import Pagination from '../../components/Pagination.svelte';
   import { metatags } from '@roxi/routify';
-  import { backend, user, addListener } from '../../../stores.js';
-  import Upload from '../../../components/UserUpload.svelte';
+  import { backend, user, addListener } from '../../stores.js';
+  import Upload from '../../components/UserUpload.svelte';
   import { onMount } from 'svelte';
 
   let users = [];
@@ -31,7 +31,7 @@
 
     getNew();
 
-    const getUsers = await fetch(backend + '/user/all/content', {
+    const getUsers = await fetch(backend + '/user/all/list', {
       credentials: 'include',
     });
     users = await getUsers.json();
@@ -42,7 +42,10 @@
   //+ `${(showNsfw) ? '?nsfw=true' : ''}`
   const GetUserUploads = async () => {
     const res = await fetch(
-      backend + '/user/get-uploads/' + selected + `${showNsfw ? '?nsfw=true' : ''}`,
+      backend +
+        '/user/get-uploads/' +
+        selected +
+        `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
       }
@@ -107,13 +110,9 @@
 
   {#await request then userUploads}
     {#if userUploads.uploads.length > 0}
-      <Pager
-        list={userUploads.uploads}
-        properties={{ canDelete, 'on:deletegif': { deleteGif } }}
-        component={Upload}
-        prop="gif"
-        maxItems={6}
-      />
+      <Pagination items={userUploads.uploads} maxItems={6} key={'_id'}>
+        <Upload {canDelete} slot="body" let:prop={gif} {gif} />
+      </Pagination>
     {:else}
       <br />
       <b>

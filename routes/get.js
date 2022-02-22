@@ -3,6 +3,7 @@ const Router = express.Router();
 
 const { db, GetSafeUser, settings } = require("../index.js");
 const { ensureKey, ensurePerms } = require("../lib/apiManager")
+const { paginate, fetchGifs } = require("../lib/util.js")
 module.exports = Router;
 
 
@@ -13,33 +14,9 @@ const baseUrl = settings.get('baseUrl')
 Router.get('/api/find/:search', /*ensureKey,*/ async (req, res) => {
     let { search } = req.params;
     const nsfw = req.query.nsfw == 'true' || false;
+    search = search.split(',');
 
-    search = search.split(',').map(x => x.trim().toLowerCase());
-
-    const query = {
-        $or: [
-            { "name": { "$regex": search.join(' '), "$options": "i" } },
-            { "originalname": { "$regex": search.join(' '), "$options": "i" } },
-            { "tags": { "$in": [...search] } },
-        ]
-    }
-    if (!nsfw) {
-        query.nsfw = false;
-    }
-    const results = await db.schemas.Gifs.find(query).limit(20).populate('user');
-    let gifs = [];
-
-    //make copy to unlink from schemas
-    results.forEach(r => {
-        //need to improve this, reference object without linking
-        let x = JSON.parse(JSON.stringify(r));
-        x.user = GetSafeUser(x.user, false);//fix path
-        x.url = encodeURI(baseUrl + x.path);
-        delete x.path;
-        //return x;
-        gifs.push(x);
-    });
-
+    let gifs = await fetchGifs(search, nsfw);
 
     //filter info based on permissions (not working//TODO)
     if (req.user != null) {

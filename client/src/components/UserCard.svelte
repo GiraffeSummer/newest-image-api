@@ -2,8 +2,9 @@
   import { backend, user as _user, HighestPermission } from '../stores.js';
 
   export let user;
-  export let properties = {};
-  let { permissions } = properties;
+  /*export let properties = {};
+  let { permissions } = properties;*/
+  export let permissions ;
 
   let message,
     messageActive = false;

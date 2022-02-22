@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { log } = require('../lib/logger');
 const Permissions = require('../lib/permissions');
 
-const { passport, db, GetSafeUser, settings } = require("../index.js");
+const { passport, db, GetSafeUser, settings,GetDataUser } = require("../index.js");
 const { ensurePerms, ensureAuthenticated } = require("../lib/apiManager")
 
 const { CleanObject, HighestPermission, PermissionKeys } = require("../lib/functions.js");
@@ -14,7 +14,7 @@ const perms = CleanObject(Permissions, ['member', 'none', 'download', 'all_perms
 
 module.exports = Router;
 
-Router.get('/user/all/content', ensurePerms(['manage_user']), async (req, res) => {
+Router.get('/user/all/list', ensurePerms(['manage_user']), async (req, res) => {
     const currentUser = await db.schemas.Users.findOne({ _id: req.user._id });
     let users = JSON.parse(JSON.stringify(await db.schemas.Users.find({})))
 
@@ -67,5 +67,7 @@ Router.post('/user/:id', ensurePerms(['manage_user']), async (req, res) => {
 })
 
 Router.get('/data/user', (req, res) => {
-    res.json({ user: GetSafeUser(req.user, true) })
+    res.json({
+        user: GetDataUser(req.user, ["_id", "username", "color", "avatar", "joindate", "userid",'permissions'])
+    })
 });

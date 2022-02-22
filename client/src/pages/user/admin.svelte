@@ -1,7 +1,7 @@
 <script>
-  import { user, backend, SetPermKeys, objectMap } from '../../../stores.js';
-  import UserCard from '../../../components/UserCard.svelte';
-  import Pager from '../../../components/Pager.svelte';
+  import { user, backend, SetPermKeys, objectMap } from '../../stores.js';
+  import UserCard from '../../components/UserCard.svelte';
+  import Pagination from '../../components/Pagination.svelte';
   import { onMount } from 'svelte';
   let users = [];
   let permissions;
@@ -18,11 +18,9 @@
 </script>
 
 {#if users.length > 0}
-  <Pager
-    prop="user"
-    list={users}
-    properties={{ permissions }}
-    component={UserCard}
-    maxItems={6}
-  />
+  <Pagination items={users} maxItems={6}>
+    <div slot="body" let:prop={user}>
+      <UserCard {permissions} {user} />
+    </div>
+  </Pagination>
 {/if}
