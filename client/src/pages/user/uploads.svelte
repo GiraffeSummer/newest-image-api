@@ -111,7 +111,7 @@
   {#await request then userUploads}
     {#if userUploads.uploads.length > 0}
       <Pagination items={userUploads.uploads} maxItems={6} key={'_id'}>
-        <Upload {canDelete} slot="body" let:prop={gif} {gif} />
+        <Upload {canDelete} slot="body" let:prop={gif} {gif} on:deletegif={deleteGif} />
       </Pagination>
     {:else}
       <br />
