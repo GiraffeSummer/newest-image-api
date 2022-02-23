@@ -7,8 +7,6 @@ it allows custom uploads from users, you can login with discord.
 
 I have a cool permissions system.
 
-current push just is the main upload and get functionality
-
 Uses Mini.css for styling
 
 TODO:

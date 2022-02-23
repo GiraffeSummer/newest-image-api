@@ -1,8 +1,10 @@
 <script>
-  import Card from '../components/Card.svelte';
   import Pagination from '../components/Pagination.svelte';
   import { metatags } from '@roxi/routify';
   import { backend, safeFileName, user } from '../stores.js';
+
+  metatags.title = 'Find';
+  metatags.description = 'search for gifs';
 
   let tags = '';
   let showNsfw = false;
@@ -17,8 +19,6 @@
   let canSearch = true;
   $: canSearch = lastSearch != tags;
 
-  metatags.title = 'Find';
-  metatags.description = '';
   const getData = async () => {
     if (!canSearch) return;
 
@@ -84,11 +84,12 @@
 
 {#if gifImages.length > 0}
   <Pagination items={gifImages} maxItems={10}>
-    <Card slot="body" let:prop={gif} alt={gif.name} src={gif.src}>
-      <div slot="header">
-        {gif.name}
-      </div>
-    </Card>
+    <div class="card" slot="body" let:prop={gif}>
+      <figure>
+        <h5 class="section">{gif.name}</h5>
+        <img src={gif.src} alt={gif.alt} class="section media dark" />
+      </figure>
+    </div>
   </Pagination>
   <br />
   <h3>Raw:</h3>
@@ -101,5 +102,9 @@
   pre {
     overflow: scroll;
     height: 500px;
+  }
+  figure > img {
+    object-fit: contain;
+    min-width: 300px;
   }
 </style>

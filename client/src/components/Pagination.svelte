@@ -49,20 +49,25 @@
     {/each}
   {/if}
 </div>
-
-<div class="button-group" style={maxPages == 1 ? 'display: none;' : ''}>
-  <button disabled={!back} on:click={changePage(currentPage - 1)}>◀ Back</button
+<div class="row {$$props.class}">
+  <div
+    class="button-group col-md-3 center"
+    style={maxPages == 1 ? 'display: none;' : ''}
   >
-  {#each pre as l, i}
-    <button>{i}</button>
-  {/each}
-  <button disabled>{currentPage}/{maxPages}</button>
-  {#each pos as l, i}
-    <button>{i}</button>
-  {/each}
-  <button disabled={!next} on:click={changePage(currentPage + 1)}
-    >Next ▶
-  </button>
+    <button disabled={!back} on:click={changePage(currentPage - 1)}
+      >◀ Back</button
+    >
+    {#each pre as l, i}
+      <button>{i}</button>
+    {/each}
+    <button disabled>{currentPage}/{maxPages}</button>
+    {#each pos as l, i}
+      <button>{i}</button>
+    {/each}
+    <button disabled={!next} on:click={changePage(currentPage + 1)}
+      >Next ▶
+    </button>
+  </div>
 </div>
 
 <style>
