@@ -91,14 +91,10 @@
       </figure>
 
       <div class="card">
-        <table>
-          <tr>
-            <b>Tags:</b>
-          </tr>
-          {#each gif.tags as tag}
-            <tr>{tag}</tr>
-          {/each}
-        </table>
+        <b>Tags:</b>
+        {#each gif.tags as tag}
+          {tag}<br />
+        {/each}
       </div>
     </div>
   </Pagination>
