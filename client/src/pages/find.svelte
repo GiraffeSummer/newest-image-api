@@ -12,7 +12,7 @@
   $: tags = safeFileName(tags);
 
   let lastSearch = '';
-  let gifImages = [];
+  let gifs = [];
   let result = {};
 
   //reduce spam of API requests
@@ -30,7 +30,7 @@
       }
     );
     const json = await res.json();
-    let gifs = json.gifs.map((a) => {
+    gifs = json.gifs.map((a) => {
       delete a._id;
       delete a.__v;
       return a;
@@ -46,9 +46,9 @@
           return a;
         });*/
 
-    gifImages = gifs.map((gif) => {
+    /*gifImages = gifs.map((gif) => {
       return { name: gif.name, alt: gif.originalname, src: gif.url };
-    });
+    });*/
     result = JSON.stringify(gifs, null, 2);
   };
 
@@ -82,13 +82,24 @@
 </form>
 <br /><br />
 
-{#if gifImages.length > 0}
-  <Pagination items={gifImages} maxItems={10}>
+{#if gifs.length > 0}
+  <Pagination items={gifs} maxItems={10}>
     <div class="card" slot="body" let:prop={gif}>
+      
       <figure>
         <h5 class="section">{gif.name}</h5>
-        <img src={gif.src} alt={gif.alt} class="section media dark" />
+        <img src={gif.url} alt={gif.originalname} class="section media dark" />
       </figure>
+
+      <div class="row">
+        <div style="padding-left:.5em">
+          <b>Tags</b>
+        </div>
+        {#each gif.tags as tag}
+          <div class="card" style="cursor:default/*pointer*/">{tag}</div>
+        {/each}
+      </div>
+
     </div>
   </Pagination>
   <br />
@@ -99,6 +110,9 @@
 {/if}
 
 <style>
+  h5 {
+    cursor: default;
+  }
   pre {
     overflow: scroll;
     height: 500px;
