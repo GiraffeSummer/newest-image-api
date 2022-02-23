@@ -85,21 +85,21 @@
 {#if gifs.length > 0}
   <Pagination items={gifs} maxItems={10}>
     <div class="card" slot="body" let:prop={gif}>
-      
       <figure>
         <h5 class="section">{gif.name}</h5>
         <img src={gif.url} alt={gif.originalname} class="section media dark" />
       </figure>
 
-      <div class="row">
-        <div style="padding-left:.5em">
-          <b>Tags</b>
-        </div>
-        {#each gif.tags as tag}
-          <div class="card" style="cursor:default/*pointer*/">{tag}</div>
-        {/each}
+      <div class="card">
+        <table>
+          <tr>
+            <b>Tags:</b>
+          </tr>
+          {#each gif.tags as tag}
+            <tr>{tag}</tr>
+          {/each}
+        </table>
       </div>
-
     </div>
   </Pagination>
   <br />
