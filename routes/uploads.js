@@ -41,7 +41,7 @@ Router.get('/user/get-uploads/:id', ensurePerms(['upload']), async (req, res) =>
     const nsfw = req.query.nsfw == 'true' || false;
     if (!self) {
         const requestUser = await db.schemas.Users.findOne({ _id: req.user._id });
-        if (!requestUser.permission.includes('access_user')) {
+        if (!requestUser.permissions.includes('access_user')) {
             const { uploads, nsfwResults } = await GetUserUploads(requestUser._id, nsfw);
             return res.status(403)
                 .send({ user: GetSafeUser(req.user, true), uploader: GetSafeUser(requestUser), uploads, nsfwResults })
