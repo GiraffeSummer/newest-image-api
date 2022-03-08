@@ -21,10 +21,11 @@
 
   const getData = async () => {
     if (!canSearch) return;
-
-    lastSearch = `${tags.trim()}`;
+    const toSearch = tags.trim();
+    if (toSearch.length === 0) return;
+    lastSearch = `${toSearch}`;
     const res = await fetch(
-      backend + '/api/find/' + tags.trim() + `${showNsfw ? '?nsfw=true' : ''}`,
+      backend + '/api/find/' + toSearch + `${showNsfw ? '?nsfw=true' : ''}`,
       {
         credentials: 'include',
       }
