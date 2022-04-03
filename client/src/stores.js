@@ -41,13 +41,13 @@ export function HighestPermission(user) {
 const elem = {}
 
 export function addListener(evtName, listener) {
-    if (elem[evtName] == undefined) elem[evtName] =[];
+    if (elem[evtName] == undefined) elem[evtName] = [];
     elem[evtName].push(listener);
 }
 
 export function dispatchEvent(evtName, data) {
     if (typeof elem[evtName] === 'function') {
-        elem[evtName].forEach(evt=>{evt(data)});
+        elem[evtName].forEach(evt => { evt(data) });
     }
     else
         throw new Error('listener is not a function');
@@ -59,4 +59,15 @@ export function searchQuery(q = null) {
     let obj = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
     if (q != null) {/*if( obj.hasOwnProperty(q))*/return obj[q]; }
     else return obj
+}
+
+export function debounce(cb, delay = 1000) {
+    let timeout
+
+    return (...args) => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+            cb(...args)
+        }, delay)
+    }
 }

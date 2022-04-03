@@ -1,7 +1,7 @@
 <script>
   import Pagination from '../components/Pagination.svelte';
   import { metatags } from '@roxi/routify';
-  import { backend, safeFileName, user } from '../stores.js';
+  import { backend, safeFileName, debounce, user } from '../stores.js';
 
   metatags.title = 'Find';
   metatags.description = 'search for gifs';
@@ -19,11 +19,19 @@
   let canSearch = true;
   $: canSearch = lastSearch != tags;
 
-  const getData = async () => {
-    if (!canSearch) return;
+  const debounceGetdata = debounce(() => {
+    console.log('debounce');
+    getData();
+  }, 500);
+
+  const getData = async (avoid = false) => {
+    if (!canSearch && !avoid) return;
     const toSearch = tags.trim();
     if (toSearch.length === 0) return;
     lastSearch = `${toSearch}`;
+
+    console.log('getdata');
+
     const res = await fetch(
       backend + '/api/find/' + toSearch + `${showNsfw ? '?nsfw=true' : ''}`,
       {
@@ -53,11 +61,17 @@
     result = JSON.stringify(gifs, null, 2);
   };
 
-  $: tags, getData();
+  $: tags, debounceGetdata();
 
   const checkEnter = (e, cb) => {
     if (e.key === 'Enter') cb(e);
   };
+
+  /*
+  on:keydown={(e) => {
+      checkEnter(e, debounceGetdata);
+    }}
+    */
 </script>
 
 <form class="form input-group" on:submit|preventDefault={() => {}}>
@@ -66,16 +80,16 @@
     id="search"
     placeholder="Search..."
     bind:value={tags}
-    on:keydown={(e) => {
-      checkEnter(e, getData);
-    }}
+    on:input={debounceGetdata}
   />
   <label for="showNsfw">
     <input
       id="showNsfw"
       type="checkbox"
       bind:checked={showNsfw}
-      on:change={getData}
+      on:change={() => {
+        getData(true);
+      }}
     />
     Show Nsfw?
   </label>
