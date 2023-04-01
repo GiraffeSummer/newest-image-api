@@ -3,7 +3,7 @@ const Router = express.Router();
 
 const { db, GetSafeUser, settings } = require("../index.js");
 const { ensureKey, ensurePerms } = require("../lib/apiManager")
-const { paginate, fetchGifs } = require("../lib/util.js")
+const { paginate, fetchGifs, unlink } = require("../lib/util.js")
 module.exports = Router;
 
 
@@ -47,3 +47,32 @@ Router.get('/api/find/:search', /*ensureKey,*/ async (req, res) => {
 Router.get('/raw/user', (req, res) => {
     res.send({ user: req.user })
 })*/
+
+
+Router.get('/api/image/:id', /*ensureKey,*/ async (req, res) => {
+    let { id } = req.params;
+
+    let gifs = await db.schemas.Gifs.findOne({ _id: id })
+
+    //filter info based on permissions (not working//TODO)
+    if (req.user != null) {
+        if (!req.user.permissions.includes('access_user')) {
+            const allowedFields = ['username', 'avatar', 'joindate']
+            gifs = gifs.map((a) => {
+                let tempUser = {}
+                for (const key in a.user) {
+                    if (allowedFields.includes(key)) {
+                        tempUser[key] = a.user[key];
+                    } module.exports = Router;
+                }
+
+                delete a.user;
+                a.user = tempUser;
+                return a;
+            });
+        }
+    }
+    let gif = unlink([gifs])[0]
+
+    res.send(gif);
+})
