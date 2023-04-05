@@ -27,7 +27,7 @@ Router.get('/api/find/:search', /*ensureKey,*/ async (req, res) => {
                 for (const key in a.user) {
                     if (allowedFields.includes(key)) {
                         tempUser[key] = a.user[key];
-                    } module.exports = Router;
+                    };
                 }
 
                 delete a.user;
@@ -63,7 +63,7 @@ Router.get('/api/image/:id', /*ensureKey,*/ async (req, res) => {
                 for (const key in a.user) {
                     if (allowedFields.includes(key)) {
                         tempUser[key] = a.user[key];
-                    } module.exports = Router;
+                    };
                 }
 
                 delete a.user;
